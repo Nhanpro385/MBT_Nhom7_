@@ -4,12 +4,12 @@ session_start();
 // links goocs
 // Định nghĩa một số URL hằng số cho ứng dụng.
 $ROOT_URL = "/MBT_NHOM7_"; // URL gốc của ứng dụng.
-$CONTENT_URL = "$ROOT_URL/content";  // URL cho tài nguyên liên quan đến nội dung.
+$public_URL = "$ROOT_URL/public";  // URL cho tài nguyên liên quan đến nội dung.
 $ADMIN_URL = "$ROOT_URL/admin";      // URL cho tài nguyên liên quan đến quản trị.
 $SITE_URL = "$ROOT_URL/site";
 $upload_url = "$ROOT_URL/upload";
 // Định nghĩa thư mục nơi các hình ảnh được tải lên sẽ được lưu trữ trên máy chủ.
-$IMAGE_DIR = $_SERVER["DOCUMENT_ROOT"] . "$ROOT_URL/upload";
+$IMAGE_DIR = $_SERVER["DOCUMENT_ROOT"] . "$ROOT_URL/uploads";
 
 // Định nghĩa một số biến ban đầu.
 $view_name = "index.php";  // Tên chế độ xem mặc định.
