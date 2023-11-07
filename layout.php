@@ -10,13 +10,16 @@
 	<link href="public/css/global.css" rel="stylesheet">
 	<link href="public/css/index.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rajdhani&display=swap" rel="stylesheet">
-	<script src="public/js/bootstrap_bundle_min.js"></script>
 </head>
 
 <body>
     <?php 
+        require "site/model/header.php";
         require $view_name;
-    ?>
+        require "site/model/footer.php";
+        ?>
 </body>
+<script src="public/js/bootstrap_bundle_min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
 </html>

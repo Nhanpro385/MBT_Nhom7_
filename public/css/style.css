@@ -1,0 +1,15 @@
+.login-box {
+    display: flex;
+}
+.login-box form {
+    width: 50%;
+    margin: auto;
+}
+.login-box form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+.login-box > form label {
+    font-weight: bold;
+    font-size: 20px;
+}

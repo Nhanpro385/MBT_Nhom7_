@@ -1,0 +1,34 @@
+<?php 
+    function user_insert($name,$email,$phone,$address,$password,$role){
+        $sql = "INSERT INTO customers(name,email,phone,address,password,role) VALUES(?,?,?,?,?,?)";
+        pdo_execute($sql,$name,$email,$phone,$address,$password,$role);
+    }
+    function user_update($id,$name,$email,$phone,$address,$password,$role){
+        $sql = "UPDATE customers SET name=?,email=?,phone=?,address=?,password=?,role=? WHERE id=?";
+        pdo_execute($sql,$name,$email,$phone,$address,$password,$role,$id);
+    }
+    function user_delete($id){
+        $sql = "DELETE FROM customers WHERE id=?";
+        if(is_array($id)){
+            foreach ($id as $ma) {
+                pdo_execute($sql, $ma);
+            }
+        }
+        else{
+            pdo_execute($sql, $id);
+        }
+    }
+    function user_select_all(){
+        $sql = "SELECT * FROM customers ORDER BY customer_id  DESC";
+        return pdo_query($sql);
+    }
+    function user_select_by_id($id){
+        $sql = "SELECT * FROM customers WHERE customer_id =?";
+        return pdo_query_one($sql, $id);
+        
+    }
+    function user_exist($id){
+        $sql = "SELECT count(*) FROM customers WHERE customer_id=?";
+        return pdo_query_value($sql, $id) > 0;
+    }
+?>

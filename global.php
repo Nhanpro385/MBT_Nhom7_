@@ -102,3 +102,12 @@ function check_login()
         exit; // Dừng việc thực hiện sau khi chuyển hướng.
     }
 }
+function check_email($email)
+{
+    $pattern = "/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/";
+    if (preg_match($pattern, $email)) { // Hàm preg_match() sẽ trả về 1 nếu có sự khớp giữa chuỗi và biểu thức chính quy, ngược lại trả về 0.
+        return true;
+    } else {
+        return false;
+    }
+}

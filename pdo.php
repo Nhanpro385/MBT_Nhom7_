@@ -1,17 +1,17 @@
 <?php
-$dburl = "mysql:host=localhost;dbname=xshop;charset=utf8";
+$dburl = "mysql:host=localhost;dbname=duan1;charset=utf8";
 $username = "root";
 $password = "hao123";
 try {
     $conn = new PDO($dburl, $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // echo "ket noi thanh cong";
+    
 } catch (PDOException $e) {
     echo "ket noi that bai" . $e->getMessage();
 }
 function pdo_get_connection()
 {
-    $dburl =  "mysql:host=localhost;dbname=xshop;charset=utf8";
+    $dburl =  "mysql:host=localhost;dbname=duan1;charset=utf8";
     $username = "root";
     $password = "hao123";
     $conn = new PDO($dburl, $username, $password);
