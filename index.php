@@ -13,6 +13,8 @@ if (exist_param("login")) {
     $view_name = "site/view/list-ticket.php";
 } else if (exist_param("ticket-detail")) {
     $view_name = "site/view/ticket-deatail.php";
+} else if (exist_param("payment")) {
+    $view_name = "site/view/payment.php";
 } else {
     $view_name = "site/view/home.php";
 }

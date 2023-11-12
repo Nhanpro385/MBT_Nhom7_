@@ -1032,7 +1032,16 @@
                 </ul>
             </div>
         </div>
+        <div class="btn_link_seat_show">
+            <a href="">Tiếp tục </a>
+        </div>
     </section>
 </body>
-
+<script>
+    $(document).ready(function(){
+        $('.seat_items').click(function(){
+            $(this).toggleClass('seat_items_active');
+        });
+    });
+</script>
 </html>

@@ -25,13 +25,16 @@
 .seat_items {
   width: 5%;
   position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
 }
 .seat_code {
   position: absolute;
   font-size: 20px;
   font-weight: 600;
   top: 10%;
-  left: 30%;
+  left: 45%;
 }
 .seat_line {
   display: flex;
@@ -181,7 +184,7 @@ m-select div {
   color: #fff;
   border-radius: 5px;
 }
-.ticket_date_items{
+.ticket_date_items {
   transition: all 0.3s ease-in-out;
 }
 .ticket_date_items-active {
@@ -189,47 +192,305 @@ m-select div {
   color: #fff;
   border-radius: 5px;
 }
-.ticket_deatail{
-  display: flex;
-
+.ticket_detail {
+  margin-top: 30px;
 }
-.ticket_detail_img{
+.ticket_detail_img {
   width: 400px;
   margin-right: 50px;
 }
 .ticket_info > span {
   display: block;
 }
-.ticket_deatil_box{
+
+.ticket_deatil_box {
   display: flex;
 }
-.ticket_detail-title{
+.ticket_detail-title {
   font-size: 22px;
   font-weight: 600;
   margin-bottom: 10px;
 }
-.ticket_detail-description
-,.ticket_detail-actor
-,.ticket_detail-director
-,.ticket_detail-genre
-,.ticket_detail-language
-,.ticket_detail-date
-,.ticket_detail-time{
+.ticket_detail-description,
+.ticket_detail-actor,
+.ticket_detail-director,
+.ticket_detail-genre,
+.ticket_detail-language,
+.ticket_detail-date,
+.ticket_detail-time {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 10px;
   color: darkgray;
 }
-.btn_ticket_detail{
+.btn_ticket_detail {
   padding: 10px 50px;
   background-color: #de1002;
   color: #fff;
   border-radius: 5px;
   margin-top: 30px;
 }
-.btn_ticket_detail:hover{
+.btn_ticket_detail:hover {
   background-color: #fff;
   color: #de1002;
   font-weight: 600;
   border: 4px double #de1002;
+}
+/* modal */
+#modal_trailer {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.modal_show {
+  display: flex;
+}
+.modal_1 {
+  position: relative;
+  width: 800px;
+
+  margin: auto;
+  margin-top: 100px;
+}
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+}
+/* .show_modal{
+  display: block;
+} */
+@keyframes openmodal {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.open_modal {
+  animation: openmodal 0.5s ease-in-out;
+}
+.ticket_deatil_boxr-btn {
+  padding: 20px;
+  margin-top: 10px;
+  display: block;
+}
+.heading_ticket_title {
+  text-align: center;
+  padding: 30px 0;
+}
+.heading_cinema_title {
+  text-align: center;
+  padding: 30px 0;
+}
+.showtime_cinema {
+  display: flex;
+  align-items: center;
+}
+.showtime_list {
+  display: flex;
+}
+.showtime_items {
+  padding: 10px 20px;
+  background-color: #de1002;
+  color: #fff;
+  border-radius: 5px;
+  margin: 0 5px;
+  font-size: 20px;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out\;;
+}
+.showtime_cinema label {
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 10px;
+}
+.cinema_item {
+  background-color: #1b1b1b;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+.showtime_items_active {
+  background-color: #fff;
+  color: #de1002;
+}
+.cinema_item_active {
+  background-color: #7a7a7a;
+  color: #fff;
+}
+.btn_link_seat_show {
+  text-align: center;
+  margin: 30px 5px;
+}
+.btn_link_seat_show a {
+  padding: 10px 50px;
+  background-color: #de1002;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.showtime_items:hover {
+  background-color: #fff;
+  color: #de1002;
+  cursor: pointer;
+}
+.seat_items:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  border: 1px solid #de1002;
+  border-radius: 5px;
+}
+.seat_items_active {
+  cursor: pointer;
+  opacity: 0.5;
+  border: 1px solid c;
+  border-radius: 5px;
+}
+.ticket_img_movie {
+  width: 200px;
+  overflow: hidden;
+  transition: 0.3s ease-in-out;
+}
+.ticket_info {
+  text-align: center;
+  flex: 1;
+}
+.ticket_info_detail > span {
+  display: block;
+  font-size: 25px;
+  font-family: 600;
+  text-align: left;
+}
+.ticket_name_movie {
+  font-weight: 600;
+  margin: 10px auto;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  width: 200px;
+  font-size: 30px;
+}
+.payment {
+  display: flex;
+}
+.heading_payment {
+  text-align: center;
+  padding: 30px 0;
+}
+.payticket_method_item {
+}
+.payticket {
+  flex: 1;
+  background-color: #de1002;
+  padding: 20px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.payticket_method_item label {
+  font-size: 20px;
+  font-weight: 600;
+  position: relative;
+}
+.payticket_method_item_label:hover {
+  background-color: #fff;
+  color: #de1002;
+  transform: translateX(10px);
+}
+.form_pay_visa {
+  background-color: #272525;
+  padding: 10px;
+  display: none;
+}
+.payticket_method_item_label {
+  padding: 10px 20px;
+  background-color: #fff;
+  margin: 10px 0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s ease-in-out;
+  color: #de1002;
+}
+.form_pay_visa input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+.btn_pay_visa {
+  padding: 10px 50px;
+  background-color: #de1002;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 10px 0;
+  border: none;
+}
+.btn_hover:hover {
+  background-color: #fff;
+  color: #de1002;
+  cursor: pointer;
+}
+.ticket_info {
+  background-color: #272525;
+  padding: 20px;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+}
+.add-on_items img {
+  width: 100px;
+  border-radius: 5px;
+}
+hr {
+  border: 1px solid #de1002;
+}
+.name_addon {
+  font-size: 18px;
+  font-weight: 600;
+}
+.price_addon {
+  font-size: 20px;
+  font-weight: 600;
+  color: #de1002;
+  margin-left: 10px;
+}
+.box_ticket {
+  display: flex;
+}
+.ticket_movie_info {
+  flex: 1;
+  align-items: center;
+}
+.ticket_info_detail {
+  flex: 1;
+}
+.toal_price{
+  background-color: #de1002;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+}
+.add-on_foods{
+  text-align: left;
+  margin-left: 50px;
+}
+.add-on_foods h4 {
+  margin-bottom: 10px;
 }
