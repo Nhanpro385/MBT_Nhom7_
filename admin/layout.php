@@ -26,7 +26,7 @@
     <?php 
         require "model/header.php";
         require $view_name;
-        require "admin/model/footer.php";
+        require "model/footer.php";
         ?>
 </body>
 <script src="../public/admintemplate/vendor/jquery/jquery.min.js"></script>
