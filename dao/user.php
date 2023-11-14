@@ -30,7 +30,7 @@
     function user_select_by_email($email){
         $sql = "SELECT * FROM customers WHERE email =?";
         return pdo_query_one($sql, $email);
-        
+
     }
     function user_exist($id){
         $sql = "SELECT count(*) FROM customers WHERE customer_id=?";

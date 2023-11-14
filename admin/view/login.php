@@ -41,7 +41,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user" id="loginForm" method="post" action="">
+                                    <form class="user" id="loginForm" method="post" action="../controller/login.php">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="Email" aria-describedby="emailHelp"
@@ -58,7 +58,7 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="btn-login"> Login</button>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="btn_login"> Login</button>
                                     </form>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
@@ -89,7 +89,7 @@
     <script src="../../public/admintemplate/js/sb-admin-2.min.js"></script>
 
     <!-- Custom script for form validation -->
-    <script>
+    <!-- <script>
         $(document).ready(function () {
             $("#loginBtn").click(function (event) {
                 event.preventDefault(); // Prevent the form from submitting
@@ -116,7 +116,7 @@
                 alert("Form submitted successfully!");
             });
         });
-    </script>
+    </script> -->
 
 </body>
 

@@ -22,7 +22,7 @@
 
 </head>
 
-<body>
+<body id="page-top">
     <?php 
         require "model/header.php";
         require $view_name;
