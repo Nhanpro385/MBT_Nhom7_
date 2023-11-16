@@ -228,39 +228,54 @@
 // $user_data là mảng chứa dữ liệu người dùng
 
 // Bắt đầu table
-echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">';
-echo '<thead>';
-echo '<tr>';
-echo '<th>Name</th>';
-echo '<th>Email</th>';
-echo '<th>Phone</th>';
-echo '<th>Role</th>';
-echo '</tr>';
-echo '</thead>';
-echo '<tfoot>';
-echo '<tr>';
-echo '<th>Name</th>';
-echo '<th>Email</th>';
-echo '<th>Phone</th>';
-echo '<th>Role</th>';
-echo '</tr>';
-echo '</tfoot>';
-echo '<tbody>';
-
-// Duyệt qua mỗi user và thêm dữ liệu vào bảng
-foreach ($user_data as $user) {
+    echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">';
+    echo '<thead>';
     echo '<tr>';
-    echo '<td>' . $user['name'] . '</td>';
-    echo '<td>' . $user['email'] . '</td>';
-    echo '<td>' . $user['phone'] . '</td>';
-    echo '<td>' . $user['role'] . '</td>';
+    echo '<th>Name</th>';
+    echo '<th>Email</th>';
+    echo '<th>Phone</th>';
+    echo '<th>Role</th>';
+    echo '<th>Action</th>';
     echo '</tr>';
-}
+    echo '</thead>';
+    echo '<tfoot>';
+    echo '<tr>';
+    echo '<th>Name</th>';
+    echo '<th>Email</th>';
+    echo '<th>Phone</th>';
+    echo '<th>Role</th>';
+    echo '<th>Action</th>';
+    echo '</tr>';
+    echo '</tfoot>';
+    echo '<tbody>';
 
-// Kết thúc table
-echo '</tbody>';
-echo '</table>';
-?>
+    // Duyệt qua mỗi user và thêm dữ liệu vào bảng
+    foreach ($user_data as $user) {
+        echo '<tr>';
+        echo '<td>' . $user['name'] . '</td>';
+        echo '<td>' . $user['email'] . '</td>';
+        echo '<td>' . $user['phone'] . '</td>';
+        echo '<td>' . $user['role'] . '</td>';
+        echo '<td><form id ="account"> 
+        <a href=" '.$user["customer_id"].' " name class="btn btn-info btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fas fa-info-circle"></i>
+        </span>
+        <span class="text">Update info</span>
+    </a> <a href="'.$user["customer_id"].'" class="btn btn-danger btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fas fa-trash"></i>
+        </span>
+        <span class="text">Remove user</span>
+    </a>
+    </form> </td>';
+        echo '</tr>';
+    }
+
+    // Kết thúc table
+    echo '</tbody>';
+    echo '</table>';
+    ?>
 
                 </div>
             </div>
