@@ -13,37 +13,41 @@
   font-weight: bold;
   font-size: 20px;
 }
-.seat_img {
-  width: 70%;
-}
+
 .list_seat {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
 }
 .seat_items {
-  width: 5%;
+  width: 6%;
   position: relative;
   display: flex;
   justify-content: center;
   padding: 5px;
+
+  background-color: #de1002;
+  margin-right: 5px;
 }
 .seat_code {
-  position: absolute;
-  font-size: 20px;
-  font-weight: 600;
-  top: 10%;
-  left: 45%;
+  display: block;
+  width: 48px;
+  text-align: center;
+}
+.seat_location {
 }
 .seat_line {
   display: flex;
-  align-items: center;
+  align-tracks: center;
+  
 }
 .seat_line_number {
-  font-size: 40px;
+  
   font-weight: 600;
   margin-right: 10px;
+  display: block;
+  width: 30px;
+  text-align: center;
 }
 .screen_cinema {
   width: 100%;
@@ -139,10 +143,12 @@
 .list_sidebar_filter {
   padding-left: 20px;
   display: none;
+  margin-top: 20px;
 }
 .sidebar_filter_item {
   padding: 5px;
   font-size: 18px;
+  transition: all 0.2s ease-in-out;
 }
 m-select div {
   background-color: #de1002;
@@ -199,10 +205,14 @@ m-select div {
   width: 400px;
   margin-right: 50px;
 }
-.ticket_info > span {
+.ticket_detail_info > span {
   display: block;
 }
-
+.ticket_detail_info > span > strong {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+}
 .ticket_deatil_box {
   display: flex;
 }
@@ -230,12 +240,7 @@ m-select div {
   border-radius: 5px;
   margin-top: 30px;
 }
-.btn_ticket_detail:hover {
-  background-color: #fff;
-  color: #de1002;
-  font-weight: 600;
-  border: 4px double #de1002;
-}
+
 /* modal */
 #modal_trailer {
   display: none;
@@ -330,8 +335,19 @@ m-select div {
   color: #fff;
 }
 .btn_link_seat_show {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 30px 5px;
+}
+.provisional_price {
+  padding: 10px 20px;
+  background-color: #de1002;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 5px;
 }
 .btn_link_seat_show a {
   padding: 10px 50px;
@@ -348,13 +364,14 @@ m-select div {
 }
 .seat_items:hover {
   cursor: pointer;
-  opacity: 0.5;
-  border: 1px solid #de1002;
+  background-color: #1b1b1b;
+  /* border: 1px solid #de1002; */
   border-radius: 5px;
 }
 .seat_items_active {
   cursor: pointer;
-  opacity: 0.5;
+  background-color: #1b1b1b !important ;
+  
   border: 1px solid c;
   border-radius: 5px;
 }
@@ -364,7 +381,7 @@ m-select div {
   transition: 0.3s ease-in-out;
 }
 .ticket_info {
-  text-align: center;
+  text-align: left;
   flex: 1;
 }
 .ticket_info_detail > span {
@@ -479,7 +496,7 @@ hr {
 .ticket_info_detail {
   flex: 1;
 }
-.toal_price{
+.toal_price {
   background-color: #de1002;
   padding: 20px;
   border-radius: 10px;
@@ -487,10 +504,48 @@ hr {
   font-weight: 600;
   color: #fff;
 }
-.add-on_foods{
+.add-on_foods {
   text-align: left;
   margin-left: 50px;
 }
 .add-on_foods h4 {
   margin-bottom: 10px;
+}
+.active_fileter {
+  background-color: #de1002;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px 10px;
+
+  font-size: 16px;
+  font-weight: 600;
+}
+.custom-select-label {
+  padding: 10px;
+  border-radius: 5px;
+}
+.btn_ticket_detail:hover {
+  background-color: #fff;
+  color: #de1002;
+  cursor: pointer;
+}
+.custom-select-label-active {
+  background-color: #de1002;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.seat_top {
+  background-color: palevioletred;
+}
+.seat_label span:first-child{
+  background-color: #272525;
+  padding: 10px;
+  border-radius: 5px;
+}
+.seat_label span:last-child{
+  background-color: #ccde02;
+  padding: 10px;
+  border-radius: 5px;
 }

@@ -25,5 +25,6 @@
 </body>
 <script src="public/js/bootstrap_bundle_min.js"></script>
 <script src="./system/libary/slick-1.8.1/slick/slick.min.js"></script>
+<script src="public/js/app.js"></script>
 
 </html>

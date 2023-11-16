@@ -17,16 +17,18 @@
                     <img src="https://d1j8r0kxyu9tj8.cloudfront.net/files/1594785807J145RGZocrbiYIz.jpg" alt="" class="ticket_detail_img">
                 </div>
                 <div class="ticket_deatil_boxr">
-                    <div class="ticket_info">
-                        <span class="ticket_detail-title">Người Nhện Đa Vũ Trụ: Spider-Man</span>
-                        <span class="ticket_detail-description">Mô tả: Một câu chuyện phiêu lưu đầy hứng khởi với Người Nhện từ nhiều vũ trụ khác nhau.</span>
-                        <span class="ticket_detail-director">Đạo diễn: Peter Ramsey, Rodney Rothman, Bob Persichetti</span>
-                        <span class="ticket_detail-actor">Diễn viên: Shameik Moore, Jake Johnson, Hailee Steinfeld</span>
-                        <span class="ticket_detail-genre">Thể loại: Hành động, Phiêu lưu, Hoạt hình</span>
-                        <span class="ticket_detail-language">Ngôn ngữ: Tiếng Anh (phụ đề Tiếng Việt)</span>
-                        <span class="ticket_detail-date">Ngày chiếu: 20/11/2023</span>
-                        <span class="ticket_detail-time">Thời gian: 19:30</span>
+                    <div class="ticket_detail_info">
+                        <span class="ticket_detail-title"><strong>Người Nhện Đa Vũ Trụ:</strong> Spider-Man</span>
+                        <hr>
+                        <span class="ticket_detail-description"><strong>Mô tả:</strong> Một câu chuyện phiêu lưu đầy hứng khởi với Người Nhện từ nhiều vũ trụ khác nhau.</span>
+                        <span class="ticket_detail-director"><strong>Đạo diễn:</strong> Peter Ramsey, Rodney Rothman, Bob Persichetti</span>
+                        <span class="ticket_detail-actor"><strong>Diễn viên:</strong> Shameik Moore, Jake Johnson, Hailee Steinfeld</span>
+                        <span class="ticket_detail-genre"><strong>Thể loại:</strong> Hành động, Phiêu lưu, Hoạt hình</span>
+                        <span class="ticket_detail-language"><strong>Ngôn ngữ:</strong> Tiếng Anh (phụ đề Tiếng Việt)</span>
+                        <span class="ticket_detail-date"><strong>Ngày chiếu:</strong> 20/11/2023</span>
+                        <span class="ticket_detail-time"><strong>Thời gian:</strong> 19:30</span>
                     </div>
+
                     <div class="ticket_deatil_boxr-btn">
                         <a href="#slider_date" class="btn_ticket_detail">mua vé <i class="fa-solid fa-ticket"></i></a>
                         <a href="#" class="btn_ticket_detail open_modal_trailer">trailer</a>
@@ -126,37 +128,32 @@
                                     9:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    11:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    13:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    15:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    17:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    19:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    21:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    23:15
                                 </div>
-                                <div class="showtime_items">
-                                    9:15
-                                </div>
-                                <div class="showtime_items">
-                                    9:15
-                                </div>
+
                             </div>
                         </div>
                     </li>
                     <li class="cinema_item">
-                        <h3 class="heading_cinema_title">BMT Cần thơ</h3>
+                        <h3 class="heading_cinema_title">BMT Vĩnh Long</h3>
                         <div class="showtime_cinema">
                             <label>2d Phu de</label>
                             <div class="showtime_list">
@@ -164,37 +161,31 @@
                                     9:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    11:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    13:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    15:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    17:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    19:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    21:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
-                                </div>
-                                <div class="showtime_items">
-                                    9:15
-                                </div>
-                                <div class="showtime_items">
-                                    9:15
+                                    23:15
                                 </div>
                             </div>
                         </div>
                     </li>
                     <li class="cinema_item">
-                        <h3 class="heading_cinema_title">BMT Cần thơ</h3>
+                        <h3 class="heading_cinema_title">BMT HCM city</h3>
                         <div class="showtime_cinema">
                             <label>2d Phu de</label>
                             <div class="showtime_list">
@@ -202,37 +193,31 @@
                                     9:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    11:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    13:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    15:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    17:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    19:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    21:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
-                                </div>
-                                <div class="showtime_items">
-                                    9:15
-                                </div>
-                                <div class="showtime_items">
-                                    9:15
+                                    23:15
                                 </div>
                             </div>
                         </div>
                     </li>
                     <li class="cinema_item">
-                        <h3 class="heading_cinema_title">BMT Cần thơ</h3>
+                        <h3 class="heading_cinema_title">BMT Cà mau </h3>
                         <div class="showtime_cinema">
                             <label>2d Phu de</label>
                             <div class="showtime_list">
@@ -240,37 +225,31 @@
                                     9:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    11:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    13:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    15:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    17:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    19:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    21:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
-                                </div>
-                                <div class="showtime_items">
-                                    9:15
-                                </div>
-                                <div class="showtime_items">
-                                    9:15
+                                    23:15
                                 </div>
                             </div>
                         </div>
                     </li>
                     <li class="cinema_item">
-                        <h3 class="heading_cinema_title">BMT Cần thơ</h3>
+                        <h3 class="heading_cinema_title">BMT An Giang</h3>
                         <div class="showtime_cinema">
                             <label>2d Phu de</label>
                             <div class="showtime_list">
@@ -278,37 +257,31 @@
                                     9:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    11:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    13:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    15:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    17:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    19:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    21:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
-                                </div>
-                                <div class="showtime_items">
-                                    9:15
-                                </div>
-                                <div class="showtime_items">
-                                    9:15
+                                    23:15
                                 </div>
                             </div>
                         </div>
                     </li>
                     <li class="cinema_item">
-                        <h3 class="heading_cinema_title">BMT Cần thơ</h3>
+                        <h3 class="heading_cinema_title">BMT Bạc Liêu</h3>
                         <div class="showtime_cinema">
                             <label>2d Phu de</label>
                             <div class="showtime_list">
@@ -316,31 +289,25 @@
                                     9:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    11:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    13:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    15:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    17:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    19:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
+                                    21:15
                                 </div>
                                 <div class="showtime_items">
-                                    9:15
-                                </div>
-                                <div class="showtime_items">
-                                    9:15
-                                </div>
-                                <div class="showtime_items">
-                                    9:15
+                                    23:15
                                 </div>
                             </div>
                         </div>
@@ -348,7 +315,7 @@
                 </ul>
             </div>
         </div>
-        <div  class="btn_link_seat_show">
+        <div class="btn_link_seat_show">
             <a href="?seat-show">chọn ghế</a>
         </div>
     </section>

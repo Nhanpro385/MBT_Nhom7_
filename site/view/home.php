@@ -109,7 +109,7 @@
 			<div class="row trend_1">
 				<div class="col-md-6 col-6">
 					<div class="trend_1l">
-						<h4 class="mb-0"><i class="fa fa-youtube-play align-middle col_red me-1"></i> Latest <span class="col_red">Movies</span></h4>
+						<h4 class="mb-0"><i class="fa fa-youtube-play align-middle col_red me-1"></i> Phim <span class="col_red">Mới nhất</span></h4>
 					</div>
 				</div>
 				<div class="col-md-6 col-6">
@@ -354,7 +354,7 @@
 			<div class="row trend_1">
 				<div class="col-md-6 col-6">
 					<div class="trend_1l">
-						<h4 class="mb-0"><i class="fa fa-youtube-play align-middle col_red me-1"></i> Upcoming <span class="col_red">Events</span></h4>
+						<h4 class="mb-0"><i class="fa fa-youtube-play align-middle col_red me-1"></i> Phim <span class="col_red">Sắp ra Mắt</span></h4>
 					</div>
 				</div>
 				<div class="col-md-6 col-6">
@@ -550,7 +550,7 @@
 			<div class="row trend_1">
 				<div class="col-md-12">
 					<div class="trend_1l">
-						<h4 class="mb-0"><i class="fa fa-youtube-play align-middle col_red me-1"></i> Trending <span class="col_red">Events</span></h4>
+						<h4 class="mb-0"><i class="fa fa-youtube-play align-middle col_red me-1"></i> Phim có lượt mua  <span class="col_red">nhiều nhất</span></h4>
 					</div>
 				</div>
 			</div>

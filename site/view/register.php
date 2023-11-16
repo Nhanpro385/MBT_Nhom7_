@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="public/css/style.css">
-    l
+
     <title>Document</title>
 </head>
 
 <body>
     <section class="login-box">
-        <form id="login_box" action="" method="post">
+        <form id="register_box" action="" method="post">
             <h2>Đăng ký tài khoản</h2>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email </label>
@@ -19,11 +19,11 @@
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label"> Tên </label>
-                <input type="text" class="form-control" id="name" aria-describedby="emailHelp">
+                <input type="text" class="form-control" id="username">
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Số điện thoại</label>
-                <input type="number" class="form-control" id="phone" aria-describedby="emailHelp">
+                <input type="number" class="form-control" id="phone">
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Mật khẩu</label>
@@ -34,39 +34,66 @@
                 <label class="form-check-label" for="exampleCheck1">nhớ đăng nhập</label>
             </div>
             <button type="submit" class="btn btn-primary" id="btn-login">Đăng nhập</button>
+            <span id="error"></span>
         </form>
     </section>
 </body>
 <script>
-    var form = document.getElementById('login_box');
+    var form = document.getElementById('register_box');
     var email = document.getElementById("email");
     var password = document.getElementById("password");
     var phone = document.getElementById("phone");
-    var name = document.getElementById("name");
-    var regitser = {};
-    regitser.email = email.value;
-    regitser.password = password.value;
-    regitser.phone = phone.value;
-    regitser.name = name.value;
-
+    var username = document.getElementById("username");
+    var regitser = {}; // Thay vì sử dụng mảng, sử dụng đối tượng
+    var error = document.getElementById("error");
     form.addEventListener("submit", function() {
         event.preventDefault();
-        $.ajax({
-            url: "site/controller/login.php",
-            type: "post",
-            data: regitser,
-            success: function(data) {
-                // if (data == "true") {
-                //     alert("Đăng Ky thành công");
-                //     window.location.href = "index.php";
-                // } else {
-                //     alert("Đăng ky thất bại");
-                // }
-                console.log(data);
-            
+        regitser.email = email.value;
+        regitser.password = password.value;
+        regitser.phone = phone.value;
+        regitser.username = username.value;
+        if (regitser.email == "" || regitser.password == "" || regitser.phone == "" || regitser.username == "") {
+            error.innerHTML = "Vui lòng nhập đầy đủ thông tin";
+            return;
+        } else {
+            error.innerHTML = "";
+            if (regitser.password.length < 6) {
+                error.innerHTML = "Mật khẩu phải có ít nhất 6 ký tự";
+                return;
+            } else {
+                error.innerHTML = "";
+                if (isValidPhoneNumber(regitser.phone)) {
+                    $.ajax({
+                        url: "site/controller/customer.php",
+                        type: "post",
+                        data: {
+                            register: regitser
+                        }, // Đặt tên mảng là 'register'
+                        success: function(data) {
+                            if (data == "true") {
+                                alert("Đăng ký thành công");
+                                window.location.href = "?login";
+                            } else {
+                                error.innerHTML = "Đăng ký thất bại";
+                                return;
+                            }
+                        }
+                    });
+                } else {
+                    error.innerHTML = "Số điện thoại không hợp lệ";
+                    return;
+                }
+
+
             }
-        })
-    })
+        }
+    });
+
+    function isValidPhoneNumber(phoneNumber) {
+        // Biểu thức chính quy kiểm tra định dạng số điện thoại
+        var phoneRegex = /^[0-9]{10,}$/;
+        return phoneRegex.test(phoneNumber);
+    }
 </script>
 
 </html>

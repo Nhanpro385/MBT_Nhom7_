@@ -1,6 +1,6 @@
 <?php
 require "global.php";
-// require " pdo.php";
+require "pdo.php";
 if (exist_param("login")) {
     $view_name = "site/view/login.php";
 } else if (exist_param("register")) {

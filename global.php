@@ -3,7 +3,7 @@
 session_start();
 // links goocs
 // Định nghĩa một số URL hằng số cho ứng dụng.
-$ROOT_URL = "/MBT_NHOM7_"; // URL gốc của ứng dụng.
+$ROOT_URL = "/duan1/MBT_NHOM7_";
 $public_URL = "$ROOT_URL/public";  // URL cho tài nguyên liên quan đến nội dung.
 $ADMIN_URL = "$ROOT_URL/admin";      // URL cho tài nguyên liên quan đến quản trị.
 $SITE_URL = "$ROOT_URL/site";
@@ -14,8 +14,8 @@ $IMAGE_DIR = $_SERVER["DOCUMENT_ROOT"] . "$ROOT_URL/uploads";
 // Định nghĩa một số biến ban đầu.
 $view_name = "index.php";  // Tên chế độ xem mặc định.
 $message = "";             // Biến để lưu trữ các thông báo.
-// Biến phiên để lưu trữ thông tin người dùng đăng nhập.
-// Hàm kiểm tra xem tên trường tồn tại trong tham số yêu cầu không.
+
+
 function exist_param($fieldname)
 {
     return array_key_exists($fieldname, $_REQUEST);
