@@ -29,19 +29,14 @@
         require "model/footer.php";
         ?>
 </body>
-<script src="../public/admintemplate/vendor/jquery/jquery.min.js"></script>
-    <script src="../public/admintemplate/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="../public/admintemplate/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="../public/admintemplate/js/sb-admin-2.min.js"></script>
+<!-- Load Bootstrap JS -->
 
     <!-- Page level plugins -->
-    <script src="../public/admintemplate/vendor/chart.js/Chart.min.js"></script>
+    <!-- <script src="../public/admintemplate/vendor/chartjs/Chart.min.js"></script> -->
 
     <!-- Page level custom scripts -->
-    <script src="../public/admintemplate/js/demo/chart-area-demo.js"></script>
-    <script src="../public/admintemplate/js/demo/chart-pie-demo.js"></script>
+    <!-- <script src="../public/admintemplate/js/demo/chart-area-demo.js"></script>
+    <script src="../public/admintemplate/js/demo/chart-pie-demo.js"></script> -->
 </html>

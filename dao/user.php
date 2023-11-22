@@ -7,6 +7,10 @@
         $sql = "UPDATE customers SET name=?,email=?,phone=?,address=?,password=?,role=? WHERE id=?";
         pdo_execute($sql,$name,$email,$phone,$address,$password,$role,$id);
     }
+    function user_update_no_pass($id,$name,$email,$phone,$address,$role){
+        $sql = "UPDATE customers SET name=?,email=?,phone=?,address=?,role=? WHERE customer_id=?";
+        pdo_execute($sql,$name,$email,$phone,$address,$role,$id);
+    }
     function user_delete($id){
         $sql = "DELETE FROM customers WHERE id=?";
         if(is_array($id)){

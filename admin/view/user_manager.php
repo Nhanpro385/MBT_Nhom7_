@@ -216,7 +216,7 @@
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Tables</h1>
         <p class="mb-4">List of customers</p>
-
+<?php echo '<h1>'.$message.'</h1>' ?>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -224,16 +224,17 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
+                  
                 <?php
 // $user_data là mảng chứa dữ liệu người dùng
 
-// Bắt đầu table
     echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">';
     echo '<thead>';
     echo '<tr>';
     echo '<th>Name</th>';
     echo '<th>Email</th>';
     echo '<th>Phone</th>';
+    echo '<th>Address</th>';
     echo '<th>Role</th>';
     echo '<th>Action</th>';
     echo '</tr>';
@@ -243,6 +244,7 @@
     echo '<th>Name</th>';
     echo '<th>Email</th>';
     echo '<th>Phone</th>';
+    echo '<th>Address</th>';
     echo '<th>Role</th>';
     echo '<th>Action</th>';
     echo '</tr>';
@@ -255,22 +257,33 @@
         echo '<td>' . $user['name'] . '</td>';
         echo '<td>' . $user['email'] . '</td>';
         echo '<td>' . $user['phone'] . '</td>';
+        echo '<td>' . $user['address'] . '</td>';
         echo '<td>' . $user['role'] . '</td>';
-        echo '<td><form id ="account"> 
-        <a href=" '.$user["customer_id"].' " name class="btn btn-info btn-icon-split">
+        echo '<td>
+        <button class="btn btn-info btn-icon-split update-btn" 
+        data-toggle="modal" 
+        data-target="#updateModal" 
+        data-id="' . $user["customer_id"] . '" 
+        data-name="' . $user["name"] . '" 
+        data-email="' . $user["email"] . '" 
+        data-phone="' . $user["phone"] . '" 
+        data-address="' . $user["address"] . '" 
+        data-role="' . $user["role"] . '">
         <span class="icon text-white-50">
             <i class="fas fa-info-circle"></i>
         </span>
         <span class="text">Update info</span>
-    </a> <a href="'.$user["customer_id"].'" class="btn btn-danger btn-icon-split">
-        <span class="icon text-white-50">
-            <i class="fas fa-trash"></i>
-        </span>
-        <span class="text">Remove user</span>
-    </a>
-    </form> </td>';
+    </button>
+            <a href="' . $user["customer_id"] . '" class="btn btn-danger btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-trash"></i>
+                </span>
+                <span class="text">Remove user</span>
+            </a>
+        </td>';
         echo '</tr>';
     }
+    
 
     // Kết thúc table
     echo '</tbody>';
@@ -298,20 +311,224 @@
 <!-- End of Footer -->
 
 </div>
+<!-- Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update User Information</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form fields for updating user information -->
+                    <form id="updateForm">
+                        <input type="hidden" name="userId" id="updateUserId" action="index.php">
+                        <div class="form-group">
+                            <label for="updateName">Name:</label>
+                            <input type="text" class="form-control" id="updateName" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateEmail">Email:</label>
+                            <input type="email" class="form-control" id="updateEmail" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="updatePhone">Phone:</label>
+                            <input type="tel" class="form-control" id="updatePhone" name="phone" required>
+                        </div>  
+                        <div class="form-group">
+                            <label for="updateAddress">Address:</label>
+                            <input type="text" class="form-control" id="updateAddress" name="address" required>
+                        </div> 
+                        <div class="form-group">
+                            <label for="updateRole">Role:</label>
+                            <input type="text" class="form-control" id="updateRole" name="role" required>
+                        </div>
+                        
+                        <button type="submit" name="btn_update_user" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
-<script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+ 
+  <!-- Load jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+<!-- Load Bootstrap JS -->
+<script src="../public/admintemplate/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript -->
+<!-- <script src="../public/admintemplate/vendor/jquery-easing/jquery.easing.min.js"></script> -->
+
+<!-- Custom scripts for all pages -->
+<!-- <script src="../public/admintemplate/js/sb-admin-2.min.js"></script> -->
+
+<!-- Load DataTables scripts after Bootstrap -->
+
+<script>
+$(document).ready(function () {
+    // Handle the update button click
+    $(document).on('click', '.btn-info', function () {
+        var userId = $(this).data('id');
+        var name = $(this).data('name');
+        var email = $(this).data('email');
+        var phone = $(this).data('phone');
+        var address = $(this).data('address');
+        var role = $(this).data('role');
+
+        $('#updateUserId').val(userId);
+        $('#updateName').val(name);
+        $('#updateEmail').val(email);
+        $('#updatePhone').val(phone);
+        $('#updateAddress').val(address);
+        $('#updateRole').val(role);
+        $('#updateModal').modal('show');
+    });
+
+    // Handle the form submission
+    $(document).on('submit', '#updateForm', function (e) {
+        e.preventDefault();
+
+        if (validateForm()) {
+            var userId = $('#updateUserId').val();
+            var name = $('#updateName').val();
+            var email = $('#updateEmail').val();
+            var address = $('#updateAddress').val();
+            var phoneNumber = $('#updatePhone').val();
+            var role = $('#updateRole').val();
+
+            var updateForm = {
+                id: userId,
+                name: name,
+                email: email,
+                address: address,
+                phoneNumber: phoneNumber,
+                role: role,
+                btn_update_user: true
+            };
+
+            // Thực hiện yêu cầu AJAX
+            $.ajax({
+                type: "GET",
+                url: "controller/update_user.php",
+                data: updateForm,
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    // Xử lý phản hồi từ máy chủ
+
+                    // Đóng modal sau khi gửi dữ liệu thành công
+                    $('#updateModal').modal('hide');
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+    });
+
+    function validateForm() {
+        var nameRegex = /^[a-zA-Z\s]+$/;
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var phoneRegex = /^\d{10}$/;
+
+        var name = $('#updateName').val().trim();
+        var email = $('#updateEmail').val().trim();
+        var phone = $('#updatePhone').val().trim();
+
+        var isValid = true;
+
+        if (!nameRegex.test(name) || name === '') {
+            displayErrorMessage($('#updateName'), 'Invalid name. Please use only alphabet characters.');
+            isValid = false;
+        }
+
+        if (!emailRegex.test(email) || email === '') {
+            displayErrorMessage($('#updateEmail'), 'Invalid email address.');
+            isValid = false;
+        }
+
+        if (!phoneRegex.test(phone) || phone === '') {
+            displayErrorMessage($('#updatePhone'), 'Invalid phone number. Please enter 10 digits.');
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    function displayErrorMessage(element, message) {
+        // Xóa thông báo lỗi trước nếu có
+        element.next('.error-message').remove();
+
+        var errorMessage = $('<div class="error-message" style="color: red;">' + message + '</div>');
+        element.after(errorMessage);
+    }
+});
+</script>
+
+<!-- <script>
+    $(document).ready(function () {
+        // Handle the update button click
+        $(document).on('click', '.btn-info', function () {
+            var userId = $(this).data('id');
+            var name = $(this).data('name');
+            var email = $(this).data('email');
+            var phone = $(this).data('phone');
+            var role = $(this).data('role');
+
+            $('#updateUserId').val(userId);
+            $('#updateName').val(name);
+            $('#updateEmail').val(email);
+            $('#updatePhone').val(phone);
+            $('#updateRole').val(role);
+
+            $('#updateModal').modal('show');
+        });
+
+        // Handle the form submission
+        $(document).on('submit', '#updateForm', function (e) {
+            e.preventDefault();
+
+            $('.error-message').remove();
+
+            var isValid = validateForm();
+
+            if (isValid) {
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    type: "GET",
+                    url: "controller/update_user.php",
+                    data: formData,
+                    success: function (response) {
+                        console.log(response);
+                        $('#updateModal').modal('hide');
+                        $('.modal-backdrop').remove();
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+            }
+        });
+
+        function validateForm() {
+            // Your validation logic here...
+            return true; // Return false if validation fails
+        }
+
+        function displayErrorMessage(element, message) {
+            var errorMessage = $('<div class="error-message" style="color: red;">' + message + '</div>');
+            element.after(errorMessage);
+        }
+    });
+</script> -->

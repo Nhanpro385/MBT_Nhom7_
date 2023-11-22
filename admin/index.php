@@ -10,9 +10,23 @@ if (!isset($_SESSION['user'])) {
 } else {
     if (exist_param("login")) {
         $view_name = "view/user_manager.php";
-    } else if (exist_param("register")) {
-        $view_name = "view/login.php";
+    } else if (exist_param("btn_genre")) {
+        
+        $view_name = "view/genre.php";
     } else if (exist_param("seat-show")) {
+        $view_name = "view/user_manager.php";
+    }else if (exist_param("btn_update_user")) {
+        $userId = $_POST['userId'];
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $role = $_POST['role'];
+        $address = $_POST['address'];
+    
+        // Gọi hàm cập nhật người dùng từ file dao/user.php
+        user_update_no_pass($userId, $name, $email, $phone, $address, $role);
+    
+        // Thêm biến $viewname và gán giá trị 'aa.php' nếu điều kiện được đáp ứng
         $view_name = "view/user_manager.php";
     } else {
         $user_data=user_select_all();
