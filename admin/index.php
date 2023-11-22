@@ -2,6 +2,7 @@
 require "../global.php";
 require "../pdo.php";
 require '../dao/user.php';
+require '../dao/genre_movie.php';
 
 // Kiểm tra nếu session chưa được thiết lập
 if (!isset($_SESSION['user'])) {
@@ -11,7 +12,7 @@ if (!isset($_SESSION['user'])) {
     if (exist_param("login")) {
         $view_name = "view/user_manager.php";
     } else if (exist_param("btn_genre")) {
-        
+        $genres = select_all_movie_genres();
         $view_name = "view/genre.php";
     } else if (exist_param("seat-show")) {
         $view_name = "view/user_manager.php";

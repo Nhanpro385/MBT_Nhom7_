@@ -260,6 +260,7 @@
         echo '<td>' . $user['address'] . '</td>';
         echo '<td>' . $user['role'] . '</td>';
         echo '<td>
+        <div class="row  ">
         <button class="btn btn-info btn-icon-split update-btn" 
         data-toggle="modal" 
         data-target="#updateModal" 
@@ -280,6 +281,7 @@
                 </span>
                 <span class="text">Remove user</span>
             </a>
+            </div>
         </td>';
         echo '</tr>';
     }
@@ -361,6 +363,7 @@
  
   <!-- Load jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- DataTables CSS -->
 
 <!-- Load Bootstrap JS -->
 <script src="../public/admintemplate/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -532,3 +535,15 @@ $(document).ready(function () {
         }
     });
 </script> -->
+<script>
+$(document).ready(function () {
+    // Khởi tạo DataTable với phân trang
+    var table = $('#dataTable').DataTable({
+        "paging": true,         // Bật phân trang
+        "pageLength": 10,       // Số lượng hàng trên mỗi trang
+        "lengthMenu": [10, 25, 50, 75, 100],  // Số lượng hàng trên mỗi trang trong menu dropdown
+        "order": [[0, 'asc']]   // Sắp xếp mặc định theo cột đầu tiên (ID) theo thứ tự tăng dần
+    });
+});
+
+</script>

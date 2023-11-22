@@ -4,7 +4,7 @@ function insert_movie_genre($genre_name) {
     pdo_execute($sql, $genre_name);
 }
 
-function update_movie_genre($genre_id, $genre_name) {
+function update_movie_genre($genre_name,$genre_id) {
     $sql = "UPDATE movie_genres SET genre_name = ? WHERE genre_id = ?";
     pdo_execute($sql, $genre_name, $genre_id);
 }
