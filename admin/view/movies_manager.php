@@ -655,7 +655,7 @@ function fileUpload(event){
         var date_end = $(this).data('date_end');
         var img_movie = $(this).data('img_movie');
         var trailer_link = $(this).data('trailer_link');
-
+//checkout
         $('#update_movie_title').val(title);
         $('#update_movie_genre').val(genreId); // Assuming this is the correct ID for genre in your options
         $('#update_movie_director').val(director);
