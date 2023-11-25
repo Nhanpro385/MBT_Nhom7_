@@ -3,11 +3,11 @@
 session_start();
 // links goocs
 // Định nghĩa một số URL hằng số cho ứng dụng.
-$ROOT_URL = "/MBT_NHOM7_-1"; // URL gốc của ứng dụng.
+$ROOT_URL = "/MBT_NHOM7_-1";// URL gốc của ứng dụng.
 $public_URL = "$ROOT_URL/public";  // URL cho tài nguyên liên quan đến nội dung.
 $ADMIN_URL = "$ROOT_URL/admin";      // URL cho tài nguyên liên quan đến quản trị.
 $SITE_URL = "$ROOT_URL/site";
-$upload_url = "$ROOT_URL/upload";
+$upload_url = "$ROOT_URL/uploads";
 // Định nghĩa thư mục nơi các hình ảnh được tải lên sẽ được lưu trữ trên máy chủ.
 $IMAGE_DIR = $_SERVER["DOCUMENT_ROOT"] . "$ROOT_URL/uploads";
 

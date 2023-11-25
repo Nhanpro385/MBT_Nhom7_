@@ -463,7 +463,7 @@ $(document).ready(function () {
     });
 
     function validateForm() {
-        var nameRegex = /^[a-zA-Z\s]+$/;
+        var nameRegex = /^(?:[^\d\s]{2,}\s?)+[^\d\s]{2,}$|^([^\d\s]{2,})$/;
        
         var name = $('#updateName').val().trim();
        

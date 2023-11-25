@@ -24,10 +24,10 @@ if (exist_param("btn_login")) {
             }
 
             // Kiểm tra và điều hướng dựa trên vai_tro ngay tại đây
-            if ($user['role'] == "user") {
+            if ($user['role'] == "2") {
                 header("Location: ../index.php");
                 exit();
-            } elseif ($user['role'] == "admin") {
+            } elseif ($user['role'] == "0" || $user['role'] == "1") {
                 header("Location: ../index.php");
                 exit();
             }
