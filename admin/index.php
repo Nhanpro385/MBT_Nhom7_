@@ -5,6 +5,7 @@ require '../dao/user.php';
 require '../dao/genre_movie.php';
 require '../dao/movie.php';
 
+
 // Kiểm tra nếu session chưa được thiết lập
 if (!isset($_SESSION['user'])) {
     // Nếu session chưa được thiết lập, chuyển hướng người dùng đến trang login.php
@@ -46,8 +47,11 @@ $view_name="view/movies_manager.php";
         
             }
      else {
+       $user_data=user_select_all();
+        $movies=movies_select_all();
         $genres = select_all_movie_genres();
-        $view_name="view/add_movie.php";
+        $view_name="view/test.php";
+        
     }
 }
 

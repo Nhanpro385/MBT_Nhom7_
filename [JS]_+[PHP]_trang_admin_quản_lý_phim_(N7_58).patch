@@ -1,0 +1,555 @@
+Subject: [PATCH] [JS] +[PHP] trang admin quản lý phim (N7.58)
+---
+Index: admin/controller/movie.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/admin/controller/movie.php b/admin/controller/movie.php
+--- a/admin/controller/movie.php	(revision 183a82877c9057344b4ce91942712ea5fca38b70)
++++ b/admin/controller/movie.php	(revision 12318a1a4f521ed06b74a0b85b4ecf8a5273765d)
+@@ -1,34 +1,74 @@
+-    <?php
+-    require '../../global.php';
+-    require '../../pdo.php';
+-    require '../../dao/movie.php'; // Assuming you have a DAO for movie operations
++<?php
++require '../../global.php';
++require '../../pdo.php';
++require '../../dao/movie.php'; // Assuming you have a DAO for movie operations
++
++
++    // POST data from the form
++  
++
++    // Kiểm tra xem có file mới được chọn hay không
++    // if (isset($_FILES['update_movie_img']) && $_FILES['update_movie_img']['error'] == UPLOAD_ERR_OK) {
++    //     $upload_url = "your_upload_directory_path/"; // Change this to your actual upload directory path
++    //     $filePath = save_file('update_movie_img', $upload_url); // Assuming you have a function save_file
++
++    //     // Update movie with the new file path
++    //     movie_update($title, $genreId, $director, $actors, $duration, $description, 0, $price, $dateStart, $dateEnd, $filePath, $trailer_link, $movieId);
++    // } else {
++    //     // No new file, update without changing the file path
++    //     movie_update($title, $genreId, $director, $actors, $duration, $description, 0, $price, $dateStart, $dateEnd, null, $trailer_link, $movieId);
++    // }
++
++    // // Return success message
++    // echo json_encode(array('status' => 'success', 'message' => 'Movie updated successfully'));
++
++
++
++      // Generate unique file name
++      $fileName = time() . '_' . basename($_FILES["img_movie"]["name"]);
++var_dump($fileName);
++      // File upload path
++      $targetDir = $_SERVER["DOCUMENT_ROOT"] . "/MBT_Nhom7_-1/uploads/";
++      $targetFilePath = $targetDir . $fileName;
++  
++      // Allow certain file formats
++      $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
++      $allowTypes = array('jpg', 'png', 'jpeg', 'gif'); // Adjust this based on your requirements
++  
++      if (in_array($fileType, $allowTypes)) {
++          // Upload file to server
++          if (move_uploaded_file($_FILES["img_movie"]["tmp_name"], $targetFilePath)) {
++              // Insert file data into the database using the movie_insert function
++              $movieId_update = $_POST['updatemovieId'];
++              $title = $_POST['update_movie_title'];
++              $genreId = $_POST['update_movie_genre'];
++              $director = $_POST['update_movie_director'];
++              $actors = $_POST['update_movie_actors'];
++              $duration = $_POST['update_movie_duration'];
++              $description = $_POST['update_movie_description'];
++              $avg_rating = $_POST['update_movie_average_rating'];
+ 
+-    
++              $price = $_POST['update_movie_price'];
++              $dateStart = $_POST['update_movie_date_start'];
++              $dateEnd = $_POST['update_movie_date_end']; 
++              $trailer_link = $_POST['update_movie_link']; 
++              $filePath=$fileName;
++  var_dump($movieId_update,$title,$genreId,$director,$actors);
++              // Call the movie_insert function
++              movie_update_part_1($title, $genreId, $director, $actors, $duration, $description,$movieId_update);
++ movie_update_part_2($avg_rating , $price, $dateStart, $dateEnd, $filePath, $trailer_link,$movieId_update);
++              // Success response
++              $response['status'] = 'ok';
++          } else {
++              $response['status'] = 'err';
++          }
++      } else {
++          $response['status'] = 'type_err';
++      }
++  
++      // Render response data in JSON format
++      echo json_encode($response);
++  
++?>
+Index: admin/view/movies_manager.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/admin/view/movies_manager.php b/admin/view/movies_manager.php
+--- a/admin/view/movies_manager.php	(revision 183a82877c9057344b4ce91942712ea5fca38b70)
++++ b/admin/view/movies_manager.php	(revision 12318a1a4f521ed06b74a0b85b4ecf8a5273765d)
+@@ -461,76 +461,78 @@
+             </div>
+             <div class="modal-body">
+                 <!-- Form fields for updating user information -->
+-                <form id="addmovieForm" enctype="multipart/form-data">
+-                <div class="row">
+-                    <div>
+-                        <div class="form-group">
+-                            <label for="movieName">movie Name:</label>
+-                            <input type="text" class="form-control" id="add_movie_name" name="add_movie_name" required>
+-                        </div>
+-                        <div class="form-group">
+-                            <label for="movie_genre">Genre</label>
+-                            <select class="form-control" id="add_movie_genre" name="add_movie_genre" required>
+-                                <?php
++                <form id="updateForm" enctype="multipart/form-data">
++    <!-- Các trường dữ liệu cần cập nhật -->
++    <input type="hidden" id="updatemovieId" name="updatemovieId"> <!-- Thêm trường này để lưu movieId -->
++
++    <div class="form-group">
++        <label for="update_movie_title">movie Name:</label>
++        <input type="text" class="form-control" id="update_movie_title" name="update_movie_title" required>
++    </div>
++
++    <div class="form-group">
++        <label for="update_movie_genre">Genre</label>
++        <select class="form-control" id="update_movie_genre" name="update_movie_genre" required>
++        <?php
+                                 // Assuming $movies is an array containing movie names fetched from the database
+                                 foreach ($genres as $genre) {
+                                     echo '<option value="' . $genre['genre_id'] . '">' . $genre['genre_name'] . '</option>';
+                                 }
+                                 ?>
+-                            </select>
+-                        </div>
+-                        <div class="form-group">
+-                            <label for="director">director:</label>
+-                            <input type="text" class="form-control" id="add_movie_director" name="add_movie_director" required>
+-                            
+-                        </div>
+-                        <div class="form-group">
+-                            <label for="actors">actors:</label>
+-                            <input type="text" class="form-control" id="add_movie_actors" name="add_movie_actors"
+-                                required>
+-                        </div>
+-                        <div class="form-group">
+-                            <label for="duration">duration:</label>
+-                            <input type="text" class="form-control" id="add_movie_duration" name="add_movie_duration"
+-                                required>
+-                        </div>
+-                    </div>
+-                    <div>
+-                        <div class="form-group">
+-                            <label for="description">description:</label>
+-                            <input type="text" class="form-control" id="add_movie_description"
+-                                name="add_movie_description" required>
+-                        </div>
++        </select>
++    </div>
++
++    <div class="form-group">
++        <label for="update_movie_director">director:</label>
++        <input type="text" class="form-control" id="update_movie_director" name="update_movie_director" required>
++    </div>
++
++    <div class="form-group">
++        <label for="update_movie_actors">actors:</label>
++        <input type="text" class="form-control" id="update_movie_actors" name="update_movie_actors" required>
++    </div>
++
++    <div class="form-group">
++        <label for="update_movie_duration">duration:</label>
++        <input type="text" class="form-control" id="update_movie_duration" name="update_movie_duration" required>
++    </div>
++
++    <div class="form-group">
++        <label for="update_movie_description">description:</label>
++        <input type="text" class="form-control" id="update_movie_description" name="update_movie_description" required>
++    </div>
+ 
+-                        <div class="form-group">
+-                            <label for="price">price:</label>
+-                            <input type="text" class="form-control" id="add_movie_price" name="add_movie_price"
+-                                required>
+-                        </div>
+-                        <div class="row d-flex justify-content-between">
+-                            <div class="form-group">
+-                                <label for="add_movie_date_start">date start</label>
+-                                <input type="date" class="form-control" id="add_movie_date_start"
+-                                    name="add_movie_date_start" required>
+-                            </div>
+-                            <div class="form-group">
+-                                <label for="add_movie_date_end">date end</label>
+-                                <input type="date" class="form-control" id="add_movie_date_end"
+-                                    name="add_movie_date_end" required>
+-                            </div>
+-                        </div>
+-                        <div class="form-group">
+-                            <label for="add_movie_img">Movie banner</label>
+-                            <input type="file" class="form-control" id="add_movie_img" name="add_movie_img" required>
+-                        </div>
+-                        <div class="form-group">
+-                            <label for="add_movie_link">Movie link trailer</label>
+-                            <input type="text" class="form-control" id="add_movie_link" name="add_movie_link" required>
+-                        </div>
+-                    </div>
+-                </div>
+-                <button type="submit" class="btn btn-primary">Add movie</button>
+-            </form>
++    <div class="form-group">
++        <label for="update_movie_price">price:</label>
++        <input type="text" class="form-control" id="update_movie_price" name="update_movie_price" required>
++    </div>
++
++    <div class="row d-flex justify-content-between">
++        <div class="form-group">
++            <label for="update_movie_date_start">date start</label>
++            <input type="date" class="form-control" id="update_movie_date_start" name="update_movie_date_start" required>
++        </div>
++        <div class="form-group">
++            <label for="update_movie_date_end">date end</label>
++            <input type="date" class="form-control" id="update_movie_date_end" name="update_movie_date_end" required>
++        </div>
++    </div>
++
++    <div class="form-group">
++        <label for="update_movie_img">Movie banner</label>
++        <input type="file" class="form-control" id="update_movie_img" name="update_movie_img">
++    </div>
++    <div class="row d-flex justify-content-between">
++        <div class="form-group">
++            <label for="update_movie_trailer_link">trailer_link</label>
++            <input type="text" class="form-control" id="update_movie_trailer_link" name="update_movie_trailer_link" required>
++        </div>
++
++    <!-- Các trường dữ liệu khác cần cập nhật -->
++
++    <button type="submit" class="btn btn-primary" name="btn_update">Update Movie</button>
++</form>
++
+             </div>
+         </div>
+     </div>
+@@ -549,9 +551,9 @@
+ <!-- Bootstrap JS -->
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ <script>
+-$(function(){
++$(function () {
+     // File input field trigger when the HTML element is clicked
+-    $("#add_movie_img").click(function(){
++    $("#add_movie_img").click(function () {
+         $("#fileInput").click();
+     });
+ 
+@@ -562,102 +564,112 @@
+ 
+     // Call a function to handle file upload on select file
+     $('input[type=file]').on('change', fileUpload);
+-});
+ 
+-function fileUpload(event){
+-    // Allowed file types
+-    var allowedFileTypes = 'image.*'; // You can adjust this based on your requirements
++    function fileUpload(event) {
++        // Allowed file types
++        var allowedFileTypes = 'image.*'; // You can adjust this based on your requirements
+ 
+-    // Allowed file size
+-    var allowedFileSize = 1024; // in KB
++        // Allowed file size
++        var allowedFileSize = 1024; // in KB
+ 
+-    // Notify the user about the file upload status
+-    $("#add_movie_img").html(event.target.value + " uploading...");
++        // Notify the user about the file upload status
++        $("#add_movie_img").html(event.target.value + " uploading...");
+ 
+-    // Get the selected file
+-    var files = event.target.files;
++        // Get the selected file
++        var files = event.target.files;
+ 
+-    // Form data check the above bullet for what it is  
+-    var data = new FormData();
++        // Form data check the above bullet for what it is  
++        var data = new FormData();
+ 
+-    // File data is presented as an array
+-    for (var i = 0; i < files.length; i++) {
+-        var file = files[i];
+-        if (!file.type.match(allowedFileTypes)) {
+-            // Check file type
+-            $("#add_movie_img").html('<p class="error">File extension error! Please select the allowed file type only.</p>');
+-        } else if (file.size > (allowedFileSize * 1024)) {
+-            // Check file size (in bytes)
+-            $("#add_movie_img").html('<p class="error">File size error! Sorry, the selected file size is larger than the allowed size (>' + allowedFileSize + 'KB).</p>');
+-        } else {
+-            // Append the uploadable file to FormData object
+-            data.append('img_movie', file, file.name);
+-            data.append('add_movie_name', $("#add_movie_name").val());
+-            data.append('add_movie_genre', $("#add_movie_genre").val());
+-            data.append('add_movie_director', $("#add_movie_director").val());
+-            data.append('add_movie_actors', $("#add_movie_actors").val());
+-            data.append('add_movie_duration', $("#add_movie_duration").val());
+-            data.append('add_movie_description', $("#add_movie_description").val());
+-            data.append('add_movie_price', $("#add_movie_price").val());
+-            data.append('add_movie_date_start', $("#add_movie_date_start").val());
+-            data.append('add_movie_date_end', $("#add_movie_date_end").val());
+-            data.append('add_movie_link', $("#add_movie_link").val());
+-            // Add other form data fields in a similar manner
++        // File data is presented as an array
++        for (var i = 0; i < files.length; i++) {
++            var file = files[i];
++            if (!file.type.match(allowedFileTypes)) {
++                // Check file type
++                $("#add_movie_img").html('<p class="error">File extension error! Please select the allowed file type only.</p>');
++            } else if (file.size > (allowedFileSize * 1024)) {
++                // Check file size (in bytes)
++                $("#add_movie_img").html('<p class="error">File size error! Sorry, the selected file size is larger than the allowed size (>' + allowedFileSize + 'KB).</p>');
++            } else {
++                // Append the uploadable file to FormData object
++                data.append('img_movie', file, file.name);
++                data.append('add_movie_name', $("#add_movie_name").val());
++                data.append('add_movie_genre', $("#add_movie_genre").val());
++                data.append('add_movie_director', $("#add_movie_director").val());
++                data.append('add_movie_actors', $("#add_movie_actors").val());
++                data.append('add_movie_duration', $("#add_movie_duration").val());
++                data.append('add_movie_description', $("#add_movie_description").val());
++                data.append('add_movie_price', $("#add_movie_price").val());
++                data.append('add_movie_date_start', $("#add_movie_date_start").val());
++                data.append('add_movie_date_end', $("#add_movie_date_end").val());
++                data.append('add_movie_link', $("#add_movie_link").val());
++                // Add other form data fields in a similar manner
+ 
+-            // Create a new XMLHttpRequest
+-            var xhr = new XMLHttpRequest();
++                // Create a new XMLHttpRequest
++                var xhr = new XMLHttpRequest();
+ 
+-            // Post file data for upload
+-            xhr.open('POST', 'controller/add_movie.php', true);
+-            xhr.send(data);
+-            xhr.onload = function () {
+-                // Get response and show the uploading status
+-                var response = JSON.parse(xhr.responseText);
+-                if (xhr.status === 200 && response.status == 'ok') {
+-                    
+-                    $("#add_movie_img").html('<p class="success">File has been uploaded successfully. Click to upload another file.</p>');
+-                } else if (response.status == 'type_err') {
+-                    $("#add_movie_img").html('<p class="error">File extension error! Click to upload another file.</p>');
+-                } else {
+-                    $("#add_movie_img").html('<p class="error">Something went wrong, please try again.</p>');
+-                }
+-            };
+-        }
+-    }
+-}
++                // Post file data for upload
++                xhr.open('POST', 'controller/add_movie.php', true);
++                xhr.send(data);
++                xhr.onload = function () {
++                    // Get response and show the uploading status
++                    var response = JSON.parse(xhr.responseText);
++                    if (xhr.status === 200 && response.status == 'ok') {
++                        $('#addMovieModal').modal('hide');
++                        $("#add_movie_img").html('<p class="success">File has been uploaded successfully. Click to upload another file.</p>');
++                    } else if (response.status == 'type_err') {
++                        $("#add_movie_img").html('<p class="error">File extension error! Click to upload another file.</p>');
++                    } else {
++                        $("#add_movie_img").html('<p class="error">Something went wrong, please try again.</p>');
++                    }
++                };
++            }
++        }
++    }
+ 
+-
+-    $(document).ready(function () {
+-        // Khởi tạo DataTable
+-        var table = $('#dataTable').DataTable({
+-            "paging": true,         // Bật phân trang
+-            "pageLength": 10,       // Số lượng hàng trên mỗi trang
+-            "lengthMenu": [10, 25, 50, 75, 100],  // Số lượng hàng trên mỗi trang trong menu dropdown
+-            "order": [[0, 'asc']]   // Sắp xếp mặc định theo cột đầu tiên (ID) theo thứ tự tăng dần
+-        });
++    // Initialize DataTable
++    var table = $('#dataTable').DataTable({
++        "paging": true,
++        "pageLength": 10,
++        "lengthMenu": [10, 25, 50, 75, 100],
++        "order": [[0, 'asc']]
+     });
+ 
+- 
+-    $(document).ready(function () {
++    var movieId;
++    var title;
++    var genreId;
++    var average_rating;
++    var director;
++    var actors;
++    var duration;
++    var description;
++    var average_rating;
++    var price;
++    var date_start;
++    var date_end;
++    var img_movie;
++    var trailer_link;
++
+     // Handle the update button click
+     $(document).on('click', '.update-btn', function () {
+-        var movieId = $(this).data('movie_id');
+-        var title = $(this).data('title');
+-        var genreId = $(this).data('genre_id');
+-        var average_rating = $(this).data('average_rating');
+-        var director = $(this).data('director');
+-        var actors = $(this).data('actors');
+-        var duration = $(this).data('duration');
+-        var description = $(this).data('description');
+-        var average_rating = $(this).data('average_rating');
+-        var price = $(this).data('price');
+-        var date_start = $(this).data('date_start');
+-        var date_end = $(this).data('date_end');
+-        var img_movie = $(this).data('img_movie');
+-        var trailer_link = $(this).data('trailer_link');
+-//checkout
++        movieId = $(this).data('movie_id');
++        title = $(this).data('title');
++        genreId = $(this).data('genre_id');
++        average_rating = $(this).data('average_rating');
++        director = $(this).data('director');
++        actors = $(this).data('actors');
++        duration = $(this).data('duration');
++        description = $(this).data('description');
++        average_rating = $(this).data('average_rating');
++        price = $(this).data('price');
++        date_start = $(this).data('date_start');
++        date_end = $(this).data('date_end');
++        img_movie = $(this).data('img_movie');
++        trailer_link = $(this).data('trailer_link');
++
++        // Update form fields
+         $('#update_movie_title').val(title);
+-        $('#update_movie_genre').val(genreId); // Assuming this is the correct ID for genre in your options
++        $('#update_movie_genre').val(genreId);
+         $('#update_movie_director').val(director);
+         $('#update_movie_actors').val(actors);
+         $('#update_movie_duration').val(duration);
+@@ -665,18 +677,69 @@
+         $('#update_movie_price').val(price);
+         $('#update_movie_date_start').val(date_start);
+         $('#update_movie_date_end').val(date_end);
+-        $('#update_movie_img').val(img_movie); // Assuming you have an input field with ID 'update_movie_img'
+-        // $('#update_movie_link').val(trailer_link)
++        $('#update_movie_img').val(''); // Clear the file input field
+         $('#updatemovieId').val(movieId);
+-        // $('#updateName').val(name); // You don't seem to have 'name' data in your button
+-
+-        console.log(movieId, title, genreId, director, actors, duration, description, average_rating, price, date_start, date_end, img_movie, trailer_link);
++        $('#update_movie_trailer_link').val(trailer_link);
+     });
+ 
+-    // Handle the form submission
+-    $(document).on('submit', '#updateForm', function (e) {
++    // Handle the submit event of the update form
++    $('#updateForm').on('submit', function (e) {
+         e.preventDefault();
+-        // Perform the necessary update logic here
++
++        // Additional validation logic can be added here
++
++        // Call a function to handle file upload on select file in the update form
++        fileUpload_update();
+     });
++
++    // Call a function to handle file upload on select file in the update form
++    
++
++    function fileUpload_update() {
++        var allowedFileTypes = 'image.*';
++        var allowedFileSize = 1024;
++
++        var files = $('#update_movie_img')[0].files; // Use this to get the selected files
++
++        var data_form = new FormData();
++
++        for (var i = 0; i < files.length; i++) {
++            var file = files[i];
++            if (!file.type.match(allowedFileTypes)) {
++                $("#update_movie_img").html('<p class="error">File extension error! Please select the allowed file type only.</p>');
++            } else if (file.size > (allowedFileSize * 1024)) {
++                $("#update_movie_img").html('<p class="error">File size error! Sorry, the selected file size is larger than the allowed size (>' + allowedFileSize + 'KB).</p>');
++            } else {
++                data_form.append('updatemovieId', movieId);
++                data_form.append('update_movie_title', title);
++                data_form.append('update_movie_genre', genreId);
++                data_form.append('update_movie_director', director);
++                data_form.append('update_movie_actors', actors);
++                data_form.append('update_movie_duration', duration);
++                data_form.append('update_movie_description', description);
++                data_form.append('update_movie_price', price);
++                data_form.append('update_movie_date_start', date_start);
++                data_form.append('update_movie_date_end', date_end);
++                data_form.append('update_movie_link', trailer_link);
++                data_form.append('img_movie', file, file.name);
++
++                $.ajax({
++                    url: 'controller/movie.php',
++                    type: 'POST',
++                    data: data_form,
++                    processData: false,
++                    contentType: false,
++                    success: function (response) {
++                        $('#updateModal').modal('hide');
++                        console.log(response);
++                    },
++                    error: function (xhr, status, error) {
++                        console.error(xhr.responseText);
++                    }
++                });
++            }
++        }
++    }
+ });
++
+ </script>
+\ No newline at end of file
+Index: dao/movie.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/dao/movie.php b/dao/movie.php
+--- a/dao/movie.php	(revision 183a82877c9057344b4ce91942712ea5fca38b70)
++++ b/dao/movie.php	(revision 12318a1a4f521ed06b74a0b85b4ecf8a5273765d)
+@@ -4,10 +4,18 @@
+     pdo_execute($sql, $title, $genre_id, $director, $actors, $duration, $description, $average_rating, $price, $date_start, $date_end, $img_movie, $trailer_link);
+ }
+ 
+-function movie_update($title,$genre_id,$director,$duration,$description,$average_rating,$price,$date_start,$date_end,$img_movie,$trailer_link,$movie_id){
+-    $sql = "UPDATE movies (title,genre_id,director,duration,description,average_rating,price,date_start,date_end,img_movie,trailer_link) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?) where movie_id = ?";
+-    pdo_execute($sql,$title,$genre_id,$director,$duration,$description,$average_rating,$price,$date_start,$date_end,$img_movie,$trailer_link,$movie_id);
++function movie_update_part_1($title, $genre_id,$actors, $director, $duration, $description,$movie_id)
++{
++    $sql = "UPDATE movies SET title=?, genre_id=?, actors=?, director=?, duration=?, description=? WHERE movie_id=?";
++    pdo_execute($sql, $title, $genre_id,$actors, $director, $duration, $description, $movie_id);
+ }
++function movie_update_part_2($average_rating,$price,$date_start,$date_end,$img_movie,$trailer_link, $movie_id){
++
++    $sql = "UPDATE movies SET average_rating=?, price=?, date_start=?, date_end=?, img_movie=? , trailer_link=? WHERE movie_id=?";
++    pdo_execute($sql,$average_rating,$price,$date_start,$date_end,$img_movie,$trailer_link, $movie_id);
++}
++
++
+ function movies_select_all()
+ {
+     $sql = "SELECT 

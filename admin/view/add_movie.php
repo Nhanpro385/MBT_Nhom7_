@@ -257,6 +257,7 @@
                         <div class="form-group w-50 pr-1">
                             <label for="add_movie_img">Movie banner</label>
                             <input type="file" class="form-control" id="add_movie_img" name="add_movie_img" required>
+                        <? echo $response ?>
                         </div>
                         <div class="form-group w-50 pl-1">
                             <label for="add_movie_link">Movie link trailer</label>

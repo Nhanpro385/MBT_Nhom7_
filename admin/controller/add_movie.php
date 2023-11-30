@@ -36,11 +36,13 @@ if (isset($_FILES["img_movie"])) {
 
             // Success response
             $response['status'] = 'ok';
+          
         } else {
             $response['status'] = 'err';
         }
     } else {
         $response['status'] = 'type_err';
+        
     }
 
     // Render response data in JSON format

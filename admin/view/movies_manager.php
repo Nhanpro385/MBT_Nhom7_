@@ -453,16 +453,19 @@
             </div>
             <div class="modal-body">
                 <!-- Form fields for updating user information -->
-                <form id="addmovieForm" enctype="multipart/form-data">
+                <form id="updatemovieForm" enctype="multipart/form-data">
                     <div class="row">
                         <div>
+                               
+                                <input type="text" class="form-control" id="updatemovieId" name="updatemovieId" hidden required>
+                           
                             <div class="form-group">
-                                <label for="movieName">movie Name:</label>
-                                <input type="text" class="form-control" id="add_movie_name" name="add_movie_name" required>
+                                <label for="update_movie_title">movie title:</label>
+                                <input type="text" class="form-control" id="update_movie_title" name="update_movie_title" required>
                             </div>
                             <div class="form-group">
                                 <label for="movie_genre">Genre</label>
-                                <select class="form-control" id="add_movie_genre" name="add_movie_genre" required>
+                                <select class="form-control" id="update_movie_genre" name="update_movie_genre" required>
                                     <?php
                                     // Assuming $movies is an array containing movie names fetched from the database
                                     foreach ($genres as $genre) {
@@ -473,49 +476,52 @@
                             </div>
                             <div class="form-group">
                                 <label for="director">director:</label>
-                                <input type="text" class="form-control" id="add_movie_director" name="add_movie_director" required>
+                                <input type="text" class="form-control" id="update_movie_director" name="update_movie_director" required>
 
                             </div>
                             <div class="form-group">
                                 <label for="actors">actors:</label>
-                                <input type="text" class="form-control" id="add_movie_actors" name="add_movie_actors" required>
+                                <input type="text" class="form-control" id="update_movie_actors" name="update_movie_actors" required>
                             </div>
                             <div class="form-group">
                                 <label for="duration">duration:</label>
-                                <input type="text" class="form-control" id="add_movie_duration" name="add_movie_duration" required>
+                                <input type="text" class="form-control" id="update_movie_duration" name="update_movie_duration" required>
                             </div>
                         </div>
                         <div>
                             <div class="form-group">
                                 <label for="description">description:</label>
-                                <input type="text" class="form-control" id="add_movie_description" name="add_movie_description" required>
+                                <input type="text" class="form-control" id="update_movie_description" name="update_movie_description" required>
                             </div>
+                            
+                                <input type="text" class="form-control" id="update_movie_average_rating" hidden  name="update_movie_average_rating" required>
+                            
 
                             <div class="form-group">
                                 <label for="price">price:</label>
-                                <input type="text" class="form-control" id="add_movie_price" name="add_movie_price" required>
+                                <input type="text" class="form-control" id="update_movie_price" name="update_movie_price" required>
                             </div>
                             <div class="row d-flex justify-content-between">
                                 <div class="form-group">
-                                    <label for="add_movie_date_start">date start</label>
-                                    <input type="date" class="form-control" id="add_movie_date_start" name="add_movie_date_start" required>
+                                    <label for="update_movie_date_start">date start</label>
+                                    <input type="date" class="form-control" id="update_movie_date_start" name="update_movie_date_start" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="add_movie_date_end">date end</label>
-                                    <input type="date" class="form-control" id="add_movie_date_end" name="add_movie_date_end" required>
+                                    <label for="update_movie_date_end">date end</label>
+                                    <input type="date" class="form-control" id="update_movie_date_end" name="update_movie_date_end" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="add_movie_img">Movie banner</label>
-                                <input type="file" class="form-control" id="add_movie_img" name="add_movie_img" required>
+                                <label for="update_movie_img">Movie banner</label>
+                                <input type="file" class="form-control" id="update_img_movie" name="update_img_movie" required>
                             </div>
                             <div class="form-group">
-                                <label for="add_movie_link">Movie link trailer</label>
-                                <input type="text" class="form-control" id="add_movie_link" name="add_movie_link" required>
+                                <label for="update_movie_link">Movie link trailer</label>
+                                <input type="text" class="form-control" id="update_movie_link" name="update_movie_link" required>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add movie</button>
+                    <button type="submit" class="btn btn-primary" id="updateMovieBtn">update movie</button>
                 </form>
             </div>
         </div>
@@ -523,6 +529,7 @@
 </div>
 
 </div>
+<!-- Bootstrap JS -->
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <!-- DataTables CSS -->
@@ -533,137 +540,273 @@
 
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Bootstrap JS -->
+<!-- jQuery -->
+
+
 <script>
-    $(function() {
-        // File input field trigger when the HTML element is clicked
-        $("#add_movie_img").click(function() {
-            $("#fileInput").click();
-        });
-
-        // Prevent browsers from opening the file when it's dragged and dropped
-        $(document).on('drop dragover', function(e) {
-            e.preventDefault();
-        });
-
-        // Call a function to handle file upload on select file
-        $('input[type=file]').on('change', fileUpload);
+ $(document).ready(function () {
+    // Khởi tạo DataTable
+    var table = $('#dataTable').DataTable({
+        "paging": true,
+        "pageLength": 10,
+        "lengthMenu": [10, 25, 50, 75, 100],
+        "order": [[0, 'asc']]
     });
 
-    function fileUpload(event) {
-        // Allowed file types
-        var allowedFileTypes = 'image.*'; // You can adjust this based on your requirements
+    // Gọi hàm xử lý tải file khi click vào #add_movie_img
+    $("#add_movie_img").click(function () {
+        $("#fileInput").click();
+    });
 
-        // Allowed file size
-        var allowedFileSize = 1024; // in KB
+    // Ngăn chặn trình duyệt mở file khi được kéo và thả
+    $(document).on('drop dragover', function (e) {
+        e.preventDefault();
+    });
 
-        // Notify the user about the file upload status
-        $("#add_movie_img").html(event.target.value + " uploading...");
+    // Sự kiện thay đổi của #add_movie_img, gọi hàm xử lý tải file
+    $('#add_movie_img').on('change', fileUpload);
 
-        // Get the selected file
-        var files = event.target.files;
+    // Sự kiện click nút cập nhật
+    $(document).on('click', '.update-btn', function () {
+        // Lấy các giá trị dữ liệu từ các thuộc tính data
+        movieId = $(this).data('movie_id');
+        title = $(this).data('title');
+        genreId = $(this).data('genre_id');
+        director = $(this).data('director');
+        actors = $(this).data('actors');
+        duration = $(this).data('duration');
+        description = $(this).data('description');
+        price = $(this).data('price');
+        date_start = $(this).data('date_start');
+        date_end = $(this).data('date_end');
+        img_movie = $(this).data('img_movie');
+        trailer_link = $(this).data('trailer_link');
 
-        // Form data check the above bullet for what it is  
-        var data = new FormData();
+        // Cập nhật giá trị trong form cập nhật
+        $('#update_movie_title').val(title);
+        $('#update_movie_genre').val(genreId);
+        $('#update_movie_director').val(director);
+        $('#update_movie_actors').val(actors);
+        $('#update_movie_duration').val(duration);
+        $('#update_movie_description').val(description);
+        $('#update_movie_price').val(price);
+        $('#update_movie_date_start').val(date_start);
+        $('#update_movie_date_end').val(date_end);
+        $('#update_img_movie').val('');
+        $('#update_movie_link').val(trailer_link);
+        $('#updatemovieId').val(movieId);
 
-        // File data is presented as an array
-        for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-            if (!file.type.match(allowedFileTypes)) {
-                // Check file type
-                $("#add_movie_img").html('<p class="error">File extension error! Please select the allowed file type only.</p>');
-            } else if (file.size > (allowedFileSize * 1024)) {
-                // Check file size (in bytes)
-                $("#add_movie_img").html('<p class="error">File size error! Sorry, the selected file size is larger than the allowed size (>' + allowedFileSize + 'KB).</p>');
-            } else {
-                // Append the uploadable file to FormData object
-                data.append('img_movie', file, file.name);
-                data.append('add_movie_name', $("#add_movie_name").val());
-                data.append('add_movie_genre', $("#add_movie_genre").val());
-                data.append('add_movie_director', $("#add_movie_director").val());
-                data.append('add_movie_actors', $("#add_movie_actors").val());
-                data.append('add_movie_duration', $("#add_movie_duration").val());
-                data.append('add_movie_description', $("#add_movie_description").val());
-                data.append('add_movie_price', $("#add_movie_price").val());
-                data.append('add_movie_date_start', $("#add_movie_date_start").val());
-                data.append('add_movie_date_end', $("#add_movie_date_end").val());
-                data.append('add_movie_link', $("#add_movie_link").val());
-                // Add other form data fields in a similar manner
+        // Hiển thị modal cập nhật
+        $('#updateModal').modal('show');
+    });
+    $("#update_img_movie").click(function () {
+        $("#fileInput").click();
+    });
 
-                // Create a new XMLHttpRequest
-                var xhr = new XMLHttpRequest();
+    // Ngăn chặn trình duyệt mở file khi được kéo và thả
+    $(document).on('drop dragover', function (e) {
+        e.preventDefault();
+    });
 
-                // Post file data for upload
-                xhr.open('POST', 'controller/add_movie.php', true);
-                xhr.send(data);
-                xhr.onload = function() {
-                    // Get response and show the uploading status
-                    var response = JSON.parse(xhr.responseText);
-                    if (xhr.status === 200 && response.status == 'ok') {
+    // Sự kiện thay đổi của #add_movie_img, gọi hàm xử lý tải file
+    $('#update_img_movie').on('change', fileUpload_update);
+    $('#updateMovieBtn').on('click', function () {
+            // Đóng modal
+            $('#updateModal').modal('hide');
+        });
+   
+    // Gọi hàm xử lý tải file khi submit form cập nhật
+//     $('#updatemovieForm').on('submit', function (e) {
+//         e.preventDefault();
 
-                        $("#add_movie_img").html('<p class="success">File has been uploaded successfully. Click to upload another file.</p>');
-                    } else if (response.status == 'type_err') {
-                        $("#add_movie_img").html('<p class="error">File extension error! Click to upload another file.</p>');
-                    } else {
-                        $("#add_movie_img").html('<p class="error">Something went wrong, please try again.</p>');
-                    }
-                };
+//         // Kiểm tra nếu có file được chọn
+//         var files = $('#update_img_movie')[0].files;
+
+//         // Kiểm tra nếu có file được chọn
+//         if (files.length > 0) {
+//             // Kiểm tra dung lượng và loại file
+//             var allowedFileTypes = 'image.*';
+//             var allowedFileSize = 1024; // KB
+
+//             var file = files[0];
+
+//             if (!file.type.match(allowedFileTypes)) {
+//                 showError('File extension error! Please select the allowed file type only.');
+//                 return;
+//             }
+
+//             if (file.size > (allowedFileSize * 1024)) {
+//                 showError('File size error! Sorry, the selected file size is larger than the allowed size (' + allowedFileSize + 'KB).');
+//                 return;
+//             }
+
+//             // Tạo đối tượng FormData và thêm dữ liệu
+//             var formData = new FormData();
+//             formData.append('updatemovieId', $('#updatemovieId').val());
+//             formData.append('update_movie_title', $('#update_movie_title').val());
+//             formData.append('update_movie_genre', $('#update_movie_genre').val());
+//             formData.append('update_movie_director', $('#update_movie_director').val());
+//             formData.append('update_movie_actors', $('#update_movie_actors').val());
+//             formData.append('update_movie_duration', $('#update_movie_duration').val());
+//             formData.append('update_movie_description', $('#update_movie_description').val());
+//             formData.append('update_movie_price', $('#update_movie_price').val());
+//             formData.append('update_movie_date_start', $('#update_movie_date_start').val());
+//             formData.append('update_movie_date_end', $('#update_movie_date_end').val());
+//             formData.append('update_movie_link', $('#update_movie_link').val());
+//             formData.append('update_img_movie', file, file.name);
+// alert('Update movie');
+//             // Gửi Ajax request
+//             $.ajax({
+//                 url: 'controller/movie.php',
+//                 type: 'POST',
+//                 data: formData,
+//                 contentType: false,
+//                 processData: false,
+//                 success: function (response) {
+//                     console.log(response);
+//                     // Xử lý response tại đây, ví dụ, hiển thị thông báo
+//                     alert('Movie updated successfully!');
+//                 },
+//                 error: function (error) {
+//                     console.error(error);
+//                     // Xử lý lỗi tại đây, ví dụ, hiển thị thông báo lỗi
+//                     alert('Error updating movie!');
+//                 }
+//             });
+//         } else {
+//             showError('Please select a file.');
+//         }
+//     });
+
+    function showError(message) {
+        alert(message);
+    }
+});
+
+ function fileUpload(event) {
+            // Allowed file types
+            var allowedFileTypes = 'image.*'; // You can adjust this based on your requirements
+
+            // Allowed file size
+            var allowedFileSize = 1024; // in KB
+
+            // Notify the user about the file upload status
+            $("#add_movie_img").html(event.target.value + " uploading...");
+
+            // Get the selected file
+            var files = event.target.files;
+
+            // Form data check the above bullet for what it is  
+            var data = new FormData();
+
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                if (!file.type.match(allowedFileTypes)) {
+                    // Check file type
+                    $("#add_movie_img").html('<p class="error">File extension error! Please select the allowed file type only.</p>');
+                } else if (file.size > (allowedFileSize * 1024)) {
+                    // Check file size (in bytes)
+                    $("#add_movie_img").html('<p class="error">File size error! Sorry, the selected file size is larger than the allowed size (>' + allowedFileSize + 'KB).</p>');
+                } else {
+                    // Append the uploadable file to FormData object
+                    data.append('img_movie', file, file.name);
+                    data.append('add_movie_name', $("#add_movie_name").val());
+                    data.append('add_movie_genre', $("#add_movie_genre").val());
+                    data.append('add_movie_director', $("#add_movie_director").val());
+                    data.append('add_movie_actors', $("#add_movie_actors").val());
+                    data.append('add_movie_duration', $("#add_movie_duration").val());
+                    data.append('add_movie_description', $("#add_movie_description").val());
+                    data.append('add_movie_price', $("#add_movie_price").val());
+                    data.append('add_movie_date_start', $("#add_movie_date_start").val());
+                    data.append('add_movie_date_end', $("#add_movie_date_end").val());
+                    data.append('add_movie_link', $("#add_movie_link").val());
+                    // Add other form data fields in a similar manner
+
+                    // Create a new XMLHttpRequest
+                    var xhr = new XMLHttpRequest();
+
+                    // Post file data for upload
+                    xhr.open('POST', 'controller/add_movie.php', true);
+                    xhr.send(data);
+                    xhr.onload = function() {
+                        // Get response and show the uploading status
+                        var response = JSON.parse(xhr.responseText);
+                        if (xhr.status === 200 && response.status == 'ok') {
+
+                            $("#add_movie_img").html('<p class="success">File has been uploaded successfully. Click to upload another file.</p>');
+                        } else if (response.status == 'type_err') {
+                            $("#add_movie_img").html('<p class="error">File extension error! Click to upload another file.</p>');
+                        } else {
+                            $("#add_movie_img").html('<p class="error">Something went wrong, please try again.</p>');
+                        }
+                    };
+                }
             }
         }
-    }
 
+function fileUpload_update(event) {
+    // Xử lý tải file cho form cập nhật
+    var allowedFileTypes = 'image.*'; // You can adjust this based on your requirements
 
-    $(document).ready(function() {
-        // Khởi tạo DataTable
-        var table = $('#dataTable').DataTable({
-            "paging": true, // Bật phân trang
-            "pageLength": 10, // Số lượng hàng trên mỗi trang
-            "lengthMenu": [10, 25, 50, 75, 100], // Số lượng hàng trên mỗi trang trong menu dropdown
-            "order": [
-                [0, 'asc']
-            ] // Sắp xếp mặc định theo cột đầu tiên (ID) theo thứ tự tăng dần
-        });
-    });
+// Allowed file size
+var allowedFileSize = 1024; // in KB
 
+// Notify the user about the file upload status
+$("#update_img_movie").html(event.target.value + " uploading...");
 
-    $(document).ready(function() {
-        // Handle the update button click
-        $(document).on('click', '.update-btn', function() {
-            var movieId = $(this).data('movie_id');
-            var title = $(this).data('title');
-            var genreId = $(this).data('genre_id');
-            var average_rating = $(this).data('average_rating');
-            var director = $(this).data('director');
-            var actors = $(this).data('actors');
-            var duration = $(this).data('duration');
-            var description = $(this).data('description');
-            var average_rating = $(this).data('average_rating');
-            var price = $(this).data('price');
-            var date_start = $(this).data('date_start');
-            var date_end = $(this).data('date_end');
-            var img_movie = $(this).data('img_movie');
-            var trailer_link = $(this).data('trailer_link');
-            //checkout
-            $('#update_movie_title').val(title);
-            $('#update_movie_genre').val(genreId); // Assuming this is the correct ID for genre in your options
-            $('#update_movie_director').val(director);
-            $('#update_movie_actors').val(actors);
-            $('#update_movie_duration').val(duration);
-            $('#update_movie_description').val(description);
-            $('#update_movie_price').val(price);
-            $('#update_movie_date_start').val(date_start);
-            $('#update_movie_date_end').val(date_end);
-            $('#update_movie_img').val(img_movie); // Assuming you have an input field with ID 'update_movie_img'
-            // $('#update_movie_link').val(trailer_link)
-            $('#updatemovieId').val(movieId);
-            // $('#updateName').val(name); // You don't seem to have 'name' data in your button
+// Get the selected file
+var files = event.target.files;
 
-            console.log(movieId, title, genreId, director, actors, duration, description, average_rating, price, date_start, date_end, img_movie, trailer_link);
-        });
+// Form data check the above bullet for what it is  
+var formData = new FormData();
 
-        // Handle the form submission
-        $(document).on('submit', '#updateForm', function(e) {
-            e.preventDefault();
-            // Perform the necessary update logic here
-        });
-    });
+for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    if (!file.type.match(allowedFileTypes)) {
+        // Check file type
+        $("#update_img_movie").html('<p class="error">File extension error! Please select the allowed file type only.</p>');
+    } else if (file.size > (allowedFileSize * 1024)) {
+        // Check file size (in bytes)
+        $("#update_img_movie").html('<p class="error">File size error! Sorry, the selected file size is larger than the allowed size (>' + allowedFileSize + 'KB).</p>');
+    } else {
+        // Append the uploadable file to FormData object
+        var formData = new FormData();
+            formData.append('updatemovieId', $('#updatemovieId').val());
+            formData.append('update_movie_title', $('#update_movie_title').val());
+            formData.append('update_movie_genre', $('#update_movie_genre').val());
+            formData.append('update_movie_director', $('#update_movie_director').val());
+            formData.append('update_movie_actors', $('#update_movie_actors').val());
+            formData.append('update_movie_duration', $('#update_movie_duration').val());
+            formData.append('update_movie_description', $('#update_movie_description').val());
+            formData.append('update_movie_price', $('#update_movie_price').val());
+            formData.append('update_movie_date_start', $('#update_movie_date_start').val());
+            formData.append('update_movie_date_end', $('#update_movie_date_end').val());
+            formData.append('update_movie_link', $('#update_movie_link').val());
+            formData.append('update_movie_average_rating', $('#update_movie_average_rating').val());
+            formData.append('update_img_movie', file, file.name);
+        // Add other form data fields in a similar manner
+
+        // Create a new XMLHttpRequest
+        var xhr = new XMLHttpRequest();
+
+        // Post file data for upload
+        xhr.open('POST', 'controller/movie.php', true);
+        xhr.send(formData);
+        xhr.onload = function() {
+            // Get response and show the uploading status
+            var response = JSON.parse(xhr.responseText);
+            if (xhr.status === 200 && response.status == 'ok') {
+
+                $("#update_img_movie").html('<p class="success">File has been uploaded successfully. Click to upload another file.</p>');
+            } else if (response.status == 'type_err') {
+                $("#update_img_movie").html('<p class="error">File extension error! Click to upload another file.</p>');
+            } else {
+                $("#update_img_movie").html('<p class="error">Something went wrong, please try again.</p>');
+            }
+        };
+    };
+};
+};
+
 </script>

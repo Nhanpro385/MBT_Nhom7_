@@ -4,10 +4,19 @@ function movie_insert($title, $genre_id, $director, $actors, $duration, $descrip
     pdo_execute($sql, $title, $genre_id, $director, $actors, $duration, $description, $average_rating, $price, $date_start, $date_end, $img_movie, $trailer_link);
 }
 
-function movie_update($title,$genre_id,$director,$duration,$description,$average_rating,$price,$date_start,$date_end,$img_movie,$trailer_link,$movie_id){
-    $sql = "UPDATE movies (title,genre_id,director,duration,description,average_rating,price,date_start,date_end,img_movie,trailer_link) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?) where movie_id = ?";
-    pdo_execute($sql,$title,$genre_id,$director,$duration,$description,$average_rating,$price,$date_start,$date_end,$img_movie,$trailer_link,$movie_id);
+function movie_update_part_1($title, $genre_id, $actors, $director, $duration, $description, $movie_id)
+{
+    $sql = "UPDATE movies SET title=?, genre_id=?, actors=?, director=?, duration=?, description=? WHERE movie_id=?";
+    pdo_execute($sql, $title, $genre_id,$actors, $director, $duration, $description, $movie_id);
 }
+function movie_update_part_2($average_rating, $price, $date_start, $date_end, $img_movie, $trailer_link, $movie_id)
+{
+
+    $sql = "UPDATE movies SET average_rating=?, price=?, date_start=?, date_end=?, img_movie=? , trailer_link=? WHERE movie_id=?";
+    pdo_execute($sql,$average_rating,$price,$date_start,$date_end,$img_movie,$trailer_link, $movie_id);
+}
+
+
 function movies_select_all()
 {
     $sql = "SELECT 
