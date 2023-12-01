@@ -4,6 +4,10 @@ require "../pdo.php";
 require '../dao/user.php';
 require '../dao/genre_movie.php';
 require '../dao/movie.php';
+require '../dao/cinema.php';
+require '../dao/showtime.php';
+
+
 
 
 // Kiểm tra nếu session chưa được thiết lập
@@ -45,6 +49,12 @@ $view_name="view/movies_manager.php";
         $genres = select_all_movie_genres();
         $view_name="view/movies_manager.php";
         
+            }else if (exist_param("showtime")) {
+
+                $movies=movies_select_all();
+                $cinemas=select_all_cinemas();
+                $showtimes=select_all_showtimes();
+                $view_name="view/showtime.php";
             }
      else {
        $user_data=user_select_all();

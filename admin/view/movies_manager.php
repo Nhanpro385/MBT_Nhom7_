@@ -285,146 +285,119 @@
             </div>
         </div>
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+       <div class="container-fluid">
 
-            <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-            <p class="mb-4">List of movies </p>
-            <?php echo '<h1>' . $message . '</h1>' ?>
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+    <p class="mb-4">List of movies </p>
+    <?= '<h1>' . $message . '</h1>' ?>
 
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                </div>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        </div>
 
-                <div class="col-md-6 mt-2">
-                    <button class="btn btn-success" data-toggle="modal" data-target="#addMovieModal">
-                        <i class="fas fa-plus-circle"></i> Add Movie
-                    </button>
-                </div>
+        <div class="col-md-6 mt-2">
+            <button class="btn btn-success" data-toggle="modal" data-target="#addMovieModal">
+                <i class="fas fa-plus-circle"></i> Add Movie
+            </button>
+        </div>
 
-                <div class="card-body">
-                    <div class="table-responsive">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Genre name</th>
+                            <th>director</th>
+                            <th>actors</th>
+                            <th>duration</th>
+                            <th>description</th>
+                            <th>average_rating</th>
+                            <th>price</th>
+                            <th>date_start</th>
+                            <th>date_end</th>
+                            <th>img_movie</th>
+                            <th>trailer_link</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Genre name</th>
+                            <th>director</th>
+                            <th>actors</th>
+                            <th>duration</th>
+                            <th>description</th>
+                            <th>average_rating</th>
+                            <th>price</th>
+                            <th>date_start</th>
+                            <th>date_end</th>
+                            <th>img_movie</th>
+                            <th>trailer_link</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
 
-                        <?php
-                        // $user_data là mảng chứa dữ liệu người dùng
-
-                        echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">';
-                        echo '<thead>';
-                        echo '<tr>';
-                        echo '<th>ID</th>';
-                        echo '<th>Name</th>';
-                        echo '<th>Genre name</th>';
-                        echo '<th>director</th>';
-                        echo '<th>actors</th>';
-                        echo '<th>duration</th>';
-                        echo '<th>description</th>';
-                        echo '<th>average_rating</th>';
-                        echo '<th>price</th>';
-                        echo '<th>date_start</th>';
-                        echo '<th>date_end</th>';
-                        echo '<th>img_movie</th>';
-                        echo '<th>trailer_link</th>';
-                        echo '<th>Action</th>';
-                        echo '</tr>';
-                        echo '</thead>';
-                        echo '<tfoot>';
-                        echo '<tr>';
-                        echo '<th>ID</th>';
-                        echo '<th>Name</th>';
-                        echo '<th>Genre name</th>';
-                        echo '<th>director</th>';
-                        echo '<th>actors</th>';
-                        echo '<th>duration</th>';
-                        echo '<th>description</th>';
-                        echo '<th>average_rating</th>';
-                        echo '<th>price</th>';
-                        echo '<th>date_start</th>';
-                        echo '<th>date_end</th>';
-                        echo '<th>img_movie</th>';
-                        echo '<th>trailer_link</th>';
-
-                        echo '<th>Action</th>';
-                        echo '</tr>';
-                        echo '</tfoot>';
-                        echo '<tbody>';
-
-                        // Duyệt qua mỗi user và thêm dữ liệu vào bảng
-                        foreach ($movies as $movie) {
-                            echo '<tr>';
-                            echo '<td>' . $movie['movie_id'] . '</td>';
-                            echo '<td>' . $movie['title'] . '</td>';
-                            echo '<td>' . $movie['genre_name'] . '</td>';
-                            echo '<td>' . $movie['director'] . '</td>';
-                            echo '<td>' . $movie['actors'] . '</td>';
-                            echo '<td>' . $movie['duration'] . '</td>';
-                            echo '<td style="display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 12;
-        overflow: hidden;">' . $movie['description'] . '</td>';
-                            echo '<td>' . $movie['average_rating'] . '</td>';
-                            echo '<td>' . $movie['price'] . '</td>';
-                            echo '<td>' . $movie['date_start'] . '</td>';
-                            echo '<td>' . $movie['date_end'] . '</td>';
-                            echo '<td>' . $movie['img_movie'] . '</td>';
-                            echo '<td>' . $movie['trailer_link'] . '</td>';
-                            echo '<td>
-        <button class="btn btn-info btn-icon-split update-btn" 
-        data-toggle="modal" 
-        data-target="#updateModal" 
-        data-movie_id="' . $movie["movie_id"] . '" 
-        data-title="' . $movie['title'] . '" 
-        data-genre_id="' . $movie['genre_id'] . '"
-        data-director="' . $movie['director'] . '"
-        data-actors="' . $movie['actors'] . '"
-        data-duration="' . $movie['duration'] . '"
-        data-description="' . $movie['description'] . '"
-        data-average_rating="' . $movie['average_rating'] . '"
-        data-price="' . $movie['price'] . '"
-        data-date_start="' . $movie['date_start'] . '"
-        data-date_end="' . $movie['date_end'] . '"
-        data-img_movie="' . $movie['img_movie'] . '"
-        data-trailer_link="' . $movie['trailer_link'] . '"
-       
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        >
-        <span class="icon text-white-50">
-            <i class="fas fa-info-circle"></i>
-        </span>
-        <span class="text">Update info</span>
-    </button>
-            <a href="' . $movie["movie_id"] . '" class="btn btn-danger btn-icon-split">
-                <span class="icon text-white-50">
-                    <i class="fas fa-trash"></i>
-                </span>
-                <span class="text">Remove user</span>
-            </a>
-        </td>';
-                            echo '</tr>';
-                        }
-
-
-                        // Kết thúc table
-                        echo '</tbody>';
-                        echo '</table>';
-                        ?>
-
-                    </div>
-                </div>
+                        <?php foreach ($movies as $movie): ?>
+                            <tr>
+                                <td><?= $movie['movie_id'] ?></td>
+                                <td><?= $movie['title'] ?></td>
+                                <td><?= $movie['genre_name'] ?></td>
+                                <td><?= $movie['director'] ?></td>
+                                <td><?= $movie['actors'] ?></td>
+                                <td><?= $movie['duration'] ?></td>
+                                <td style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 12; overflow: hidden;"><?= $movie['description'] ?></td>
+                                <td><?= $movie['average_rating'] ?></td>
+                                <td><?= $movie['price'] ?></td>
+                                <td><?= $movie['date_start'] ?></td>
+                                <td><?= $movie['date_end'] ?></td>
+                                <td><?= $movie['img_movie'] ?></td>
+                                <td><?= $movie['trailer_link'] ?></td>
+                                <td>
+                                    <button class="btn btn-info btn-icon-split update-btn" 
+                                            data-toggle="modal" 
+                                            data-target="#updateModal" 
+                                            data-movie_id="<?= $movie["movie_id"] ?>" 
+                                            data-title="<?= $movie['title'] ?>" 
+                                            data-genre_id="<?= $movie['genre_id'] ?>"
+                                            data-director="<?= $movie['director'] ?>"
+                                            data-actors="<?= $movie['actors'] ?>"
+                                            data-duration="<?= $movie['duration'] ?>"
+                                            data-description="<?= $movie['description'] ?>"
+                                            data-average_rating="<?= $movie['average_rating'] ?>"
+                                            data-price="<?= $movie['price'] ?>"
+                                            data-date_start="<?= $movie['date_start'] ?>"
+                                            data-date_end="<?= $movie['date_end'] ?>"
+                                            data-img_movie="<?= $movie['img_movie'] ?>"
+                                            data-trailer_link="<?= $movie['trailer_link'] ?>">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-info-circle"></i>
+                                        </span>
+                                        <span class="text">Update info</span>
+                                    </button>
+                                    <a href="<?= $movie["movie_id"] ?>" class="btn btn-danger btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-trash"></i>
+                                        </span>
+                                        <span class="text">Remove user</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
-
         </div>
     </div>
+
+    
     <!-- /.container-fluid -->
 
 </div>
