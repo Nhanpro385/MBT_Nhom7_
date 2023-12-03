@@ -6,6 +6,7 @@ require '../dao/genre_movie.php';
 require '../dao/movie.php';
 require '../dao/cinema.php';
 require '../dao/showtime.php';
+require '../dao/food.php';
 
 
 
@@ -57,10 +58,10 @@ $view_name="view/movies_manager.php";
                 $view_name="view/showtime.php";
             }
      else {
-       $user_data=user_select_all();
         $movies=movies_select_all();
         $genres = select_all_movie_genres();
-        $view_name="view/test.php";
+        $foods=select_all_food();
+        $view_name="view/food.php";
         
     }
 }
