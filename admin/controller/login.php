@@ -5,8 +5,7 @@ require '../../dao/user.php';
 
 if (exist_param("btn_login")) {
     $email = $_POST['Email'];
-    $password = md5($_POST['Password']);
-
+    $password = hash("sha256", $_POST['Password']);
     $user = user_select_by_email($email);
 
     if ($user) {
@@ -50,4 +49,3 @@ $ma_kh = get_cookie("ma_kh");
 $password = get_cookie("password");
 
 echo "ma_kh: $ma_kh, password: $password";
-?>

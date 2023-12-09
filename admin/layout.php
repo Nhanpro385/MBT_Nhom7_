@@ -34,7 +34,10 @@
     ?>
 </body>
 
+<script src="../public/admintemplate/vendor/jquery-easing/jquery.easing.min.js"></script>
 
+    <!-- Custom scripts for all pages-->
+    <script src="../public/admintemplate/js/sb-admin-2.min.js"></script>
 <!-- Load Bootstrap JS -->
 
 <!-- Page level plugins -->

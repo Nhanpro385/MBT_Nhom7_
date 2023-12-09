@@ -191,7 +191,33 @@
 
         </nav>
         <div class="container-fluid">
-
+        <div class="modal fade" id="deleteGenreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Movie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> bạn có chắc chắn muốn xóa combo này ? <? ?></p>
+            </div>
+            <form method="post">
+                <input type="text" name="id_delete" id="id_delete" hidden> 
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" onclick="deleteMovie()">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                    Xóa
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Tables</h1>
     <p class="mb-4">List of Food Items</p>
@@ -240,7 +266,7 @@
                     echo '<td>' . $food['item_id'] . '</td>';
                     echo '<td>' . $food['item_name'] . '</td>';
                     echo '<td>' . $food['item_price'] . '</td>';
-                    echo '<td>' . $food['img'] . '</td>';
+                    echo '<td>' . $food['food_img'] . '</td>';
 
                     echo '<td>
                         <button class="btn btn-info btn-icon-split update-btn" 
@@ -254,12 +280,15 @@
                             </span>
                             <span class="text">Update info</span>
                         </button>
-                        <a href="' . $food["item_id"] . '" class="btn btn-danger btn-icon-split">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-trash"></i>
-                            </span>
-                            <span class="text">Remove item</span>
-                        </a>
+                        <button type="button" class="btn btn-danger delete-btn" 
+    data-toggle="modal" 
+    data-target="#deleteGenreModal" 
+    data-movie-id="'.$food["item_id"].'">
+<span class="icon text-white-50">
+    <i class="fas fa-trash"></i>
+</span>
+xóa Combo
+</button>
                     </td>';
                     echo '</tr>';
                 }
@@ -380,6 +409,15 @@ $(document).ready(function () {
         
         $('#addFoodModal').modal('hide');
     });
+    $('.delete-btn').on('click', function() {
+        // Lấy giá trị movie_id và title từ thuộc tính data
+        var genreID = $(this).data('movie-id');
+        $('#id_delete').val(genreID);
+console.log(genreID);
+console.log($('#id_delete').val());
+        // Hiển thị thông tin trong modal
+      
+    });
     $(document).on('submit', '#updateFoodForm', function (e) {
         e.preventDefault();
         update_food();
@@ -462,7 +500,32 @@ data.append('update_item_id', $("#update_item_id").val());
         };
     }
 }
-
+function deleteMovie() {
+        // Thực hiện xóa movie ở đây (có thể sử dụng Ajax để gửi yêu cầu xóa)
+        // Đóng modal sau khi xóa
+       
+         var data = new FormData();
+            data.append('id_delete',$("#id_delete").val());
+        var xhr = new XMLHttpRequest();
+        console.log("Movie deleted!");
+        // Post file data for upload
+        xhr.open('POST', 'controller/food.php', true);
+        xhr.send(data);
+        xhr.onload = function() {
+            // Get response and show the uploading status
+            var response = JSON.parse(xhr.responseText);
+            if (xhr.status === 200 && response.status == 'ok') {
+                $('#deleteGenreModal').modal('hide');
+                alert('Đã xóa combo ');
+                location.reload();
+                $("#update_img_movie").html('<p class="success">File has been uploaded successfully. Click to upload another file.</p>');
+            } else if (response.status == 'type_err') {
+                $("#update_img_movie").html('<p class="error">File extension error! Click to upload another file.</p>');
+            } else {
+                $("#update_img_movie").html('<p class="error">Something went wrong, please try again.</p>');
+            }
+        };
+    }
 function insert_food() {
     let allowedFileTypes = /^image\//; // Kiểm tra loại tệp
     let allowedFileSize = 2048; // Kích thước tệp tối đa (KB)

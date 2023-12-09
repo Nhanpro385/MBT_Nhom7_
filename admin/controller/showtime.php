@@ -18,6 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         insert_showtime($cinema_id, $movie_id, $start_time, $end_time, $time_type, $movie_status);
 
         echo json_encode(array('status' => 'success', 'message' => 'Showtime added successfully'));
+    }else if(isset($_POST['id_delete'])) {
+        $id=$_POST['id_delete'];
+        delete_showtime($id);
+     $response['status'] = 'ok';
+     echo json_encode($response);
     } else if (
         isset($_POST['update_showtime_id'], $_POST['update_cinema_id'], $_POST['update_movie_id'], $_POST['update_start_time'], $_POST['update_end_time'], $_POST['update_time_type'], $_POST['update_movie_status'])
     ) {

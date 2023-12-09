@@ -23,7 +23,7 @@
         }
     }
     function user_select_all(){
-        $sql = "SELECT * FROM customers ORDER BY customer_id  DESC";
+        $sql = "SELECT * FROM customers where status=0 ORDER BY customer_id  DESC ";
         return pdo_query($sql);
     }
     function user_select_by_id($id){
@@ -40,4 +40,9 @@
         $sql = "SELECT count(*) FROM customers WHERE customer_id=?";
         return pdo_query_value($sql, $id) > 0;
     }
+    
+function delete_user($food_id){
+    $sql="UPDATE customers set status=1 WHERE customer_id=?";
+    pdo_execute($sql,$food_id);
+}
 ?>

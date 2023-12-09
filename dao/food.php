@@ -18,9 +18,13 @@ function update_status_food($item_id, $new_status) {
     pdo_execute($sql, $new_status, $item_id);
 }
 
+function delete_food($food_id){
+    $sql="UPDATE foods set status=1 WHERE item_id=?";
+    pdo_execute($sql,$food_id);
+}
 
 function select_all_food() {
-    $sql = "SELECT * FROM foods";
+    $sql = "SELECT * FROM foods where status=0";
     return pdo_query($sql);
 }
 

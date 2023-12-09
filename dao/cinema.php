@@ -10,9 +10,9 @@ function update_cinema($cinema_id, $name, $address, $contact_info, $number_of_ha
     pdo_execute($sql, $name, $address, $contact_info, $number_of_halls, $cinema_id);
 }
 
-function delete_cinema($cinema_id) {
-    $sql = "DELETE FROM cinemas WHERE cinema_id = ?";
-    pdo_execute($sql, $cinema_id);
+function delete_cinema($cinema_id){
+    $sql="UPDATE cinemas set status=1 WHERE cinema_id=?";
+    pdo_execute($sql,$cinema_id);
 }
 
 function select_all_cinemas() {

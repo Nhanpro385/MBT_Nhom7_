@@ -70,6 +70,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             echo json_encode(array('status' => 'success', 'message' => 'updated successfully without new img'));
         }
+    }else if(isset($_POST['id_delete'])) {
+        $id=$_POST['id_delete'];
+        delete_food($id);
+     $response['status'] = 'ok';
+     echo json_encode($response);
     } else {
         // Xử lý trường hợp khác
         echo json_encode(array('status' => 'error', 'message' => 'Invalid parameters'));

@@ -15,7 +15,10 @@ function movie_update_part_2($average_rating, $price, $date_start, $date_end, $i
     $sql = "UPDATE movies SET average_rating=?, price=?, date_start=?, date_end=?, img_movie=? , trailer_link=? WHERE movie_id=?";
     pdo_execute($sql,$average_rating,$price,$date_start,$date_end,$img_movie,$trailer_link, $movie_id);
 }
-
+function delete_movie($movie_id){
+    $sql="UPDATE movies set status=1 WHERE movie_id=?";
+    pdo_execute($sql,$movie_id);
+}
 
 function movies_select_all()
 {
@@ -33,7 +36,7 @@ function movies_select_all()
     date_end,	
     img_movie,	
     trailer_link,
-    genre_name  FROM movies INNER JOIN movie_genres ON movies.genre_id=movie_genres.genre_id";
+    genre_name  FROM movies INNER JOIN movie_genres ON movies.genre_id=movie_genres.genre_id WHERE movies.status=0 ";
     return pdo_query($sql);
 }
 function movies_select_limit($start, $limit)

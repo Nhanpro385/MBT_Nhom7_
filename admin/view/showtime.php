@@ -395,14 +395,15 @@ foreach ($showtimes as $showtime) {
             </span>
             <span class="text">Update info</span>
         </button>
-        <button class="btn btn-danger btn-icon-split delete-btn" 
-            data-showtime_id="' . $showtime["showtime_id"] . '"
-        >
-            <span class="icon text-white-50">
-                <i class="fas fa-trash"></i>
-            </span>
-            <span class="text">Remove showtime</span>
-        </button>
+        <button type="button" class="btn btn-danger delete-btn" 
+        data-toggle="modal" 
+        data-target="#deleteGenreModal" 
+        data-movie-id="'.$showtime["showtime_id"].'">
+    <span class="icon text-white-50">
+        <i class="fas fa-trash"></i>
+    </span>
+    xóa suất chiếu
+    </button>
     </td>';
     echo '</tr>';
 }
@@ -415,7 +416,33 @@ foreach ($showtimes as $showtime) {
 </div>
 
 </div>
-
+<div class="modal fade" id="deleteGenreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Movie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> bạn có chắc chắn muốn xóa suất chiếu này ? <? ?></p>
+            </div>
+            <form method="post">
+                <input type="text" name="id_delete" id="id_delete" hidden> 
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-danger" onclick="deleteMovie()">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                    Xóa
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
         </div>
 
@@ -485,12 +512,15 @@ foreach ($showtimes as $showtime) {
         });
 
         // Xử lý sự kiện khi nút xóa được nhấn
-        $('.delete-btn').click(function () {
-            var showtime_id = $(this).data('showtime_id');
-
-            // Gửi yêu cầu xóa showtime với showtime_id tương ứng
-            // Viết mã JavaScript/Ajax cho việc xóa showtime
-        });
+        $('.delete-btn').on('click', function() {
+        // Lấy giá trị movie_id và title từ thuộc tính data
+        var genreID = $(this).data('movie-id');
+        $('#id_delete').val(genreID);
+console.log(genreID);
+console.log($('#id_delete').val());
+        // Hiển thị thông tin trong modal
+      
+    });;
 
         // Xử lý sự kiện khi nút submit trong modal "Update Showtime" được nhấn
         $('#updateShowtimeForm').submit(function (e) {
@@ -534,4 +564,30 @@ foreach ($showtimes as $showtime) {
             });
         });
     });
+    function deleteMovie() {
+        // Thực hiện xóa movie ở đây (có thể sử dụng Ajax để gửi yêu cầu xóa)
+        // Đóng modal sau khi xóa
+       
+         var data = new FormData();
+            data.append('id_delete',$("#id_delete").val());
+        var xhr = new XMLHttpRequest();
+        console.log("Movie deleted!");
+        // Post file data for upload
+        xhr.open('POST', 'controller/showtime.php', true);
+        xhr.send(data);
+        xhr.onload = function() {
+            // Get response and show the uploading status
+            var response = JSON.parse(xhr.responseText);
+            if (xhr.status === 200 && response.status == 'ok') {
+                $('#deleteGenreModal').modal('hide');
+                alert('Đã xóa combo ');
+                location.reload();
+                $("#update_img_movie").html('<p class="success">File has been uploaded successfully. Click to upload another file.</p>');
+            } else if (response.status == 'type_err') {
+                $("#update_img_movie").html('<p class="error">File extension error! Click to upload another file.</p>');
+            } else {
+                $("#update_img_movie").html('<p class="error">Something went wrong, please try again.</p>');
+            }
+        };
+    }
 </script>

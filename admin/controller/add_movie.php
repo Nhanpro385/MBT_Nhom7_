@@ -47,5 +47,10 @@ if (isset($_FILES["img_movie"])) {
 
     // Render response data in JSON format
     echo json_encode($response);
+}else if(isset($_POST['id_delete'])) {
+    $id=$_POST['id_delete'];
+ delete_movie($id);
+ $response['status'] = 'ok';
+ echo json_encode($response);
 }
 ?>

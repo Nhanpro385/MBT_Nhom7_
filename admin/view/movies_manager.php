@@ -382,12 +382,16 @@
                                         </span>
                                         <span class="text">Update info</span>
                                     </button>
-                                    <a href="<?= $movie["movie_id"] ?>" class="btn btn-danger btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-trash"></i>
-                                        </span>
-                                        <span class="text">Remove user</span>
-                                    </a>
+                                    <button type="button" class="btn btn-danger delete-btn" 
+        data-toggle="modal" 
+        data-target="#deleteMovieModal" 
+        data-movie-id="<?= $movie['movie_id'] ?>">
+    <span class="icon text-white-50">
+        <i class="fas fa-trash"></i>
+    </span>
+    Delete Movie
+</button>
+                                    
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -413,6 +417,33 @@
 </footer>
 <!-- End of Footer -->
 
+</div>
+<div class="modal fade" id="deleteMovieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Movie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this movie?</p>
+            </div>
+            <form method="get">
+                <input type="text" name="id_delete" id="id_delete" hidden> 
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" onclick="deleteMovie()">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -588,7 +619,15 @@
             // Đóng modal
             $('#updateModal').modal('hide');
         });
-   
+        $('.delete-btn').on('click', function() {
+        // Lấy giá trị movie_id và title từ thuộc tính data
+        var movieId = $(this).data('movie-id');
+        $('#id_delete').val(movieId);
+console.log(movieId);
+console.log($('#id_delete').val());
+        // Hiển thị thông tin trong modal
+      
+    });
     // Gọi hàm xử lý tải file khi submit form cập nhật
 //     $('#updatemovieForm').on('submit', function (e) {
 //         e.preventDefault();
@@ -781,5 +820,51 @@ for (var i = 0; i < files.length; i++) {
     };
 };
 };
+function deleteMovie() {
+        // Thực hiện xóa movie ở đây (có thể sử dụng Ajax để gửi yêu cầu xóa)
+      
+        // Đóng modal sau khi xóa
+       
+         var data = new FormData();
+            data.append('id_delete',$("#id_delete").val());
+        var xhr = new XMLHttpRequest();
+        console.log("Movie deleted!");
+        // Post file data for upload
+        xhr.open('POST', 'controller/add_movie.php', true);
+        xhr.send(data);
+        xhr.onload = function() {
+            // Get response and show the uploading status
+            var response = JSON.parse(xhr.responseText);
+            if (xhr.status === 200 && response.status == 'ok') {
+                $('#deleteMovieModal').modal('hide');
+                alert('Đã xóa phim ');
+                $("#update_img_movie").html('<p class="success">File has been uploaded successfully. Click to upload another file.</p>');
+            } else if (response.status == 'type_err') {
+                $("#update_img_movie").html('<p class="error">File extension error! Click to upload another file.</p>');
+            } else {
+                $("#update_img_movie").html('<p class="error">Something went wrong, please try again.</p>');
+            }
+        };
+    }
+    function getMovieInfoById(movieId) {
+        // Trả về một đối tượng chứa thông tin của phim
+        // Thực tế, bạn cần thực hiện một yêu cầu Ajax để lấy dữ liệu từ máy chủ
+        return {
+            movieId: movieId,
+            // Các trường thông tin khác của phim
+        };
+    }
 
+    // Hiển thị thông tin của phim trong modal
+    function displayMovieInfoInModal(movieInfo) {
+        // Tạo chuỗi HTML chứa thông tin của phim
+        var modalBodyContent = `
+            <p>Are you sure you want to delete this movie?</p>
+            <p>ID: ${movieInfo.movieId}</p>
+            <!-- Hiển thị các trường thông tin khác của phim -->
+        `;
+
+        // Đặt chuỗi HTML vào modal
+        $('#deleteMovieModalBody').html(modalBodyContent);
+    }
 </script>

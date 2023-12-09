@@ -275,12 +275,15 @@
         </span>
         <span class="text">Update info</span>
     </button>
-            <a href="' . $user["customer_id"] . '" class="btn btn-danger btn-icon-split">
-                <span class="icon text-white-50">
-                    <i class="fas fa-trash"></i>
-                </span>
-                <span class="text">Remove user</span>
-            </a>
+    <button type="button" class="btn btn-danger delete-btn" 
+    data-toggle="modal" 
+    data-target="#deleteGenreModal" 
+    data-movie-id="'.$user["customer_id"].'">
+<span class="icon text-white-50">
+    <i class="fas fa-trash"></i>
+</span>
+xóa Combo
+</button>
             </div>
         </td>';
         echo '</tr>';
@@ -312,6 +315,33 @@
 </footer>
 <!-- End of Footer -->
 
+</div>
+<div class="modal fade" id="deleteGenreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Movie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> bạn có chắc chắn muốn xóa thể loại phim này ? <? ?></p>
+            </div>
+            <form method="post">
+                <input type="text" name="id_delete" id="id_delete" hidden> 
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" onclick="deleteMovie()">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                    Xóa
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -476,74 +506,43 @@ $(document).ready(function () {
         element.after(errorMessage);
     }
 });
-</script>
 
-<!-- <script>
-    $(document).ready(function () {
-        // Handle the update button click
-        $(document).on('click', '.btn-info', function () {
-            var userId = $(this).data('id');
-            var name = $(this).data('name');
-            var email = $(this).data('email');
-            var phone = $(this).data('phone');
-            var role = $(this).data('role');
-
-            $('#updateUserId').val(userId);
-            $('#updateName').val(name);
-            $('#updateEmail').val(email);
-            $('#updatePhone').val(phone);
-            $('#updateRole').val(role);
-
-            $('#updateModal').modal('show');
-        });
-
-        // Handle the form submission
-        $(document).on('submit', '#updateForm', function (e) {
-            e.preventDefault();
-
-            $('.error-message').remove();
-
-            var isValid = validateForm();
-
-            if (isValid) {
-                var formData = $(this).serialize();
-
-                $.ajax({
-                    type: "GET",
-                    url: "controller/update_user.php",
-                    data: formData,
-                    success: function (response) {
-                        console.log(response);
-                        $('#updateModal').modal('hide');
-                        $('.modal-backdrop').remove();
-                    },
-                    error: function (error) {
-                        console.error(error);
-                    }
-                });
-            }
-        });
-
-        function validateForm() {
-            // Your validation logic here...
-            return true; // Return false if validation fails
-        }
-
-        function displayErrorMessage(element, message) {
-            var errorMessage = $('<div class="error-message" style="color: red;">' + message + '</div>');
-            element.after(errorMessage);
-        }
-    });
-</script> -->
-<script>
-$(document).ready(function () {
     // Khởi tạo DataTable với phân trang
-    var table = $('#dataTable').DataTable({
-        "paging": true,         // Bật phân trang
-        "pageLength": 10,       // Số lượng hàng trên mỗi trang
-        "lengthMenu": [10, 25, 50, 75, 100],  // Số lượng hàng trên mỗi trang trong menu dropdown
-        "order": [[0, 'asc']]   // Sắp xếp mặc định theo cột đầu tiên (ID) theo thứ tự tăng dần
-    });
-});
+ 
 
+$('.delete-btn').on('click', function() {
+        // Lấy giá trị movie_id và title từ thuộc tính data
+        var genreID = $(this).data('movie-id');
+        $('#id_delete').val(genreID);
+console.log(genreID);
+console.log($('#id_delete').val());
+        // Hiển thị thông tin trong modal
+      
+    });
+    function deleteMovie() {
+        // Thực hiện xóa movie ở đây (có thể sử dụng Ajax để gửi yêu cầu xóa)
+        // Đóng modal sau khi xóa
+       
+         var data = new FormData();
+            data.append('id_delete',$("#id_delete").val());
+        var xhr = new XMLHttpRequest();
+        console.log("Movie deleted!");
+        // Post file data for upload
+        xhr.open('POST', 'controller/user.php', true);
+        xhr.send(data);
+        xhr.onload = function() {
+            // Get response and show the uploading status
+            var response = JSON.parse(xhr.responseText);
+            if (xhr.status === 200 && response.status == 'ok') {
+                $('#deleteGenreModal').modal('hide');
+                alert('Đã xóa phim ');
+                location.reload();
+                $("#update_img_movie").html('<p class="success">File has been uploaded successfully. Click to upload another file.</p>');
+            } else if (response.status == 'type_err') {
+                $("#update_img_movie").html('<p class="error">File extension error! Click to upload another file.</p>');
+            } else {
+                $("#update_img_movie").html('<p class="error">Something went wrong, please try again.</p>');
+            }
+        };
+    }
 </script>

@@ -10,13 +10,14 @@ function update_showtime( $cinema_id, $movie_id, $start_time, $end_time, $time_t
     pdo_execute($sql, $cinema_id, $movie_id, $start_time, $end_time, $time_type, $movie_status, $showtime_id);
 }
 
+
 function delete_showtime($showtime_id) {
-    $sql = "DELETE FROM show_times WHERE showtime_id = ?";
+    $sql = "UPDATE  show_times SET movie_status=1 WHERE showtime_id = ?";
     pdo_execute($sql, $showtime_id);
 }
 
 function select_all_showtimes() {
-    $sql = "SELECT * FROM show_times";
+    $sql = "SELECT * FROM show_times where movie_status=0 ";
     return pdo_query($sql);
 }
 
